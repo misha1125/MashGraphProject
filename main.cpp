@@ -2,10 +2,12 @@
 #define GLEW_STATIC
 #include "libs/include/glew.h"
 #include "libs/include/glfw3.h"
+#include "MyShader.h"
 #include <string>
 #include <sstream>
 #include <cstdio>
 #include <memory>
+#include <cmath>
 
 GLfloat color = 0;
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode)
@@ -41,6 +43,7 @@ void CompiliteShader(GLfloat color){
             "    gl_Position = vec4(position, 1.0); // Напрямую передаем vec3 в vec4\n"
             "    vertexColor = vec4(position.x, position.y,position.z, 1.0f); // Устанавливаем значение выходной переменной в темно-красный цвет.\n"
             "}";
+
     GLuint vertexShader;
     vertexShader = glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(vertexShader, 1, &vertex_shader, NULL);
@@ -57,11 +60,14 @@ void CompiliteShader(GLfloat color){
                                     "in vec4 vertexColor; // Входная переменная из вершинного шейдера (то же название и тот же тип)\n"
                                     "\n"
                                     "out vec4 color;\n"
+                                    "uniform  vec4 add_color;\n"
                                     "\n"
                                     "void main()\n"
                                     "{\n"
-                                    "    color = vertexColor;\n"
+                                    "    color = vertexColor+add_color;\n"
                                     "} ";
+
+    std::cout<<fragment_shader<<std::endl;
     GLuint fragmentShader;
     fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
     const char *fr = fragment_shader.c_str();
@@ -77,10 +83,15 @@ void CompiliteShader(GLfloat color){
         glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
         std::cout << "ERROR::SHADER::CONNECTION FAILED\n" << infoLog << std::endl;
     }
+    GLfloat timeValue = glfwGetTime();
+    GLfloat greenValue = (std::sin(timeValue) / 2) + 0.5;
+    GLint vertexColorLocation = glGetUniformLocation(shaderProgram, "add_color");
     glUseProgram(shaderProgram);
+    glUniform4f(vertexColorLocation, color, greenValue/2, 0.0f, 1.0f);
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
 }
+
 
 
 void draw_triangle(GLfloat *vertices, GLfloat color, int count_of_points, size_t size_of_ver){
@@ -99,7 +110,7 @@ void draw_triangle(GLfloat *vertices, GLfloat color, int count_of_points, size_t
 }
 
 void draw_triangle_with_indexes(GLfloat *vertices, GLuint * indexes, GLfloat color, size_t size_of_ver, size_t size_of_indexes){
-    CompiliteShader(color);
+    //CompiliteShader(color);
 
     GLuint vertex_buffer;
     glGenBuffers(1, &vertex_buffer);
@@ -186,6 +197,7 @@ int main()
     glfwGetFramebufferSize(window, &width, &height);
     glfwSetKeyCallback(window, key_callback);
     glViewport(0, 0, width, height);
+    MyShader shader("../vertex_shader.vs", "../fragment_shader.fs");
     while(!glfwWindowShouldClose(window))
     {
         glfwPollEvents();
@@ -195,6 +207,8 @@ int main()
         glClear(GL_COLOR_BUFFER_BIT);
         //wireframe для отладки
         //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+        shader.Apply();
         draw_different_triangles_indexes();
         glfwSwapBuffers(window);
     }

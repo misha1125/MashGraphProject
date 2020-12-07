@@ -1,5 +1,6 @@
 file(REMOVE_RECURSE
   "CMakeFiles/mash_graph.dir/main.cpp.obj"
+  "CMakeFiles/mash_graph.dir/MyShader.cpp.obj"
   "mash_graph.pdb"
   "mash_graph.exe"
   "mash_graph.exe.manifest"

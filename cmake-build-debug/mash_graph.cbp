@@ -82,6 +82,12 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="C:/Learning/mash_graph/MyShader.cpp">
+			<Option target="mash_graph"/>
+		</Unit>
+		<Unit filename="C:/Learning/mash_graph/MyShader.h">
+			<Option target="mash_graph"/>
+		</Unit>
 		<Unit filename="C:/Learning/mash_graph/main.cpp">
 			<Option target="mash_graph"/>
 		</Unit>
