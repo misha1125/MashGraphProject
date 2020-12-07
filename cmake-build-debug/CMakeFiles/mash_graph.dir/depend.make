@@ -6,6 +6,9 @@ CMakeFiles/mash_graph.dir/MyShader.cpp.obj: ../MyShader.h
 CMakeFiles/mash_graph.dir/MyShader.cpp.obj: ../libs/include/glew.h
 CMakeFiles/mash_graph.dir/MyShader.cpp.obj: ../libs/include/glfw3.h
 
+CMakeFiles/mash_graph.dir/main.cpp.obj: ../libs/include/SOIL.h
+CMakeFiles/mash_graph.dir/main.cpp.obj: ../libs/include/glew.h
+CMakeFiles/mash_graph.dir/main.cpp.obj: ../libs/include/glfw3.h
 CMakeFiles/mash_graph.dir/main.cpp.obj: ../MyShader.h
 CMakeFiles/mash_graph.dir/main.cpp.obj: ../libs/include/glew.h
 CMakeFiles/mash_graph.dir/main.cpp.obj: ../libs/include/glfw3.h
