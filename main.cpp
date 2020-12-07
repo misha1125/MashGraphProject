@@ -9,9 +9,16 @@
 #include <cstdio>
 #include <memory>
 #include <cmath>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 
-GLfloat color = 0;
+GLuint vertex_buffer, vertex_array, index_buffer;
+
+
+GLuint PrepareImage();
+
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode)
 {
     // Когда пользователь нажимает ESC, мы устанавливаем свойство WindowShouldClose в true,
@@ -20,7 +27,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
         glfwSetWindowShouldClose(window, GL_TRUE);
     }
     if (key == GLFW_KEY_UP && action == GLFW_PRESS) {
-        color += 0.05;
+
     }
 }
 
@@ -85,36 +92,6 @@ void draw_different_triangles() {
     };
     draw_triangle(vertices2, 0.4f, 3, sizeof(vertices2));
 }
-void draw_textures(){
-    GLfloat texCoords[] = {
-            0.0f, 0.0f,  // Нижний левый угол
-            1.0f, 0.0f,  // Нижний правый угол
-            0.5f, 1.0f   // Верхняя центральная сторона
-    };
-    int width, height;
-    unsigned char* image = SOIL_load_image("../texture.jpg", &width, &height, 0, SOIL_LOAD_RGB);
-}
-
-void draw_different_triangles_indexes() {
-    GLfloat vertices[] = {
-            0.5f,  0.5f, 0.0f,  // Верхний правый угол
-            0.5f, -0.5f, 0.0f,  // Нижний правый угол
-            -0.5f, -0.5f, 0.0f,  // Нижний левый угол
-            -0.5f,  0.5f, 0.0f   // Верхний левый угол
-    };
-    GLuint indices1[] = {  // Помните, что мы начинаем с 0!
-            0, 1, 3,   // Первый треугольник
-    };
-    GLuint indices2[] = {  // Помните, что мы начинаем с 0!
-            1, 2, 3    // Второй треугольник
-    };
-
-    draw_triangle_with_indexes(vertices, indices1, 0.4f, sizeof(vertices), sizeof(indices1));
-    draw_triangle_with_indexes(vertices, indices2, 0, sizeof(vertices), sizeof(indices2));
-    draw_textures();
-}
-
-
 
 int main()
 {
@@ -148,6 +125,8 @@ int main()
     glfwSetKeyCallback(window, key_callback);
     glViewport(0, 0, width, height);
     MyShader shader("../vertex_shader.vs", "../fragment_shader.fs");
+    GLuint texture = PrepareImage();
+
     while(!glfwWindowShouldClose(window))
     {
         glfwPollEvents();
@@ -157,10 +136,81 @@ int main()
         glClear(GL_COLOR_BUFFER_BIT);
         //wireframe для отладки
         //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        glBindTexture(GL_TEXTURE_2D, texture);
+        // Activate shader
         shader.Apply();
-        draw_different_triangles_indexes();
+
+        // Draw container
+        glBindVertexArray(vertex_array);
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        glBindVertexArray(0);
+
         glfwSwapBuffers(window);
     }
+    // Properly de-allocate all resources once they've outlived their purpose
+    glDeleteVertexArrays(1, &vertex_array);
+    glDeleteBuffers(1, &vertex_buffer);
+    glDeleteBuffers(1, &index_buffer);
+
     glfwTerminate();
     return 0;
+}
+
+GLuint PrepareImage() {// Set up vertex data (and buffer(s)) and attribute pointers
+    GLfloat vertices[] = {
+            // Positions          // Colors           // Texture Coords
+            0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // Top Right
+            0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // Bottom Right
+            -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // Bottom Left
+            -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // Top Left
+    };
+    GLuint indices[] = {  // Note that we start from 0!
+            0, 1, 3, // First Triangle
+            1, 2, 3  // Second Triangle
+    };
+
+    glGenVertexArrays(1, &vertex_array);
+    glGenBuffers(1, &vertex_buffer);
+    glGenBuffers(1, &index_buffer);
+
+    glBindVertexArray(vertex_array);
+
+    glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, index_buffer);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+    // Position attribute
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)0);
+    glEnableVertexAttribArray(0);
+    // Color attribute
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
+    glEnableVertexAttribArray(1);
+    // TexCoord attribute
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)(6 * sizeof(GLfloat)));
+    glEnableVertexAttribArray(2);
+
+    glBindVertexArray(0); // Unbind vertex_array
+
+
+    // Load and create a texture
+    GLuint texture;
+    glGenTextures(1, &texture);
+    glBindTexture(GL_TEXTURE_2D, texture); // All upcoming GL_TEXTURE_2D operations now have effect on this texture object
+    // Set the texture wrapping parameters
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);    // Set texture wrapping to GL_REPEAT (usually basic wrapping method)
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    // Set texture filtering parameters
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    // Load image, create texture and generate mipmaps
+    int width, height;
+    unsigned char* image = SOIL_load_image("../specular.png", &width, &height, 0, SOIL_LOAD_RGB);
+    std::cout << image << std::endl;
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
+    glGenerateMipmap(GL_TEXTURE_2D);
+    SOIL_free_image_data(image);
+    glBindTexture(GL_TEXTURE_2D, 0);
+    return texture;
 }
