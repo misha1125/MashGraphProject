@@ -122,6 +122,33 @@ mash_graph/fast:
 	$(MAKE) -f CMakeFiles\mash_graph.dir\build.make CMakeFiles/mash_graph.dir/build
 .PHONY : mash_graph/fast
 
+Model.obj: Model.cpp.obj
+
+.PHONY : Model.obj
+
+# target to build an object file
+Model.cpp.obj:
+	$(MAKE) -f CMakeFiles\mash_graph.dir\build.make CMakeFiles/mash_graph.dir/Model.cpp.obj
+.PHONY : Model.cpp.obj
+
+Model.i: Model.cpp.i
+
+.PHONY : Model.i
+
+# target to preprocess a source file
+Model.cpp.i:
+	$(MAKE) -f CMakeFiles\mash_graph.dir\build.make CMakeFiles/mash_graph.dir/Model.cpp.i
+.PHONY : Model.cpp.i
+
+Model.s: Model.cpp.s
+
+.PHONY : Model.s
+
+# target to generate assembly for a file
+Model.cpp.s:
+	$(MAKE) -f CMakeFiles\mash_graph.dir\build.make CMakeFiles/mash_graph.dir/Model.cpp.s
+.PHONY : Model.cpp.s
+
 MyShader.obj: MyShader.cpp.obj
 
 .PHONY : MyShader.obj
@@ -185,6 +212,9 @@ help:
 	@echo ... mash_graph
 	@echo ... edit_cache
 	@echo ... rebuild_cache
+	@echo ... Model.obj
+	@echo ... Model.i
+	@echo ... Model.s
 	@echo ... MyShader.obj
 	@echo ... MyShader.i
 	@echo ... MyShader.s
