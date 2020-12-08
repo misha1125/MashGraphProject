@@ -90,7 +90,7 @@ int main()
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     //Выключение возможности изменения размера окна
     glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
-    GLFWwindow* window = glfwCreateWindow(800, 600, "LearnOpenGL", nullptr, nullptr);
+    GLFWwindow* window = glfwCreateWindow(800, 600, "Mordvincev", nullptr, nullptr);
     if (window == nullptr)
     {
         std::cout << "Failed to create GLFW window" << std::endl;
@@ -109,7 +109,9 @@ int main()
     glViewport(0, 0, width, height);
     MyShader shader("../vertex_shader.vs", "../fragment_shader.fs");
 
-    Model cube(shader, cube_vertices, sizeof(cube_vertices), 36, "../specular.png" );
+    Model cube(shader, cube_vertices, sizeof(cube_vertices), 36, "../specular.png" ,width, height);
+
+    glEnable(GL_DEPTH_TEST);
 
     while(!glfwWindowShouldClose(window))
     {
@@ -117,11 +119,11 @@ int main()
 
         // команды отрисовки тут
         glClearColor(0.2, 0.3, 0.35, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         //wireframe для отладки
         //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-        glBindTexture(GL_TEXTURE_2D, cube.texture);
-        shader.Apply();
+
+        cube.ApplyTransformation(glm::vec3(0,0,-3));
         cube.Show();
 
 

@@ -11,17 +11,21 @@
 #include <glew.h>
 #include <glfw3.h>
 #include <SOIL.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 class Model {
-public:
+
     MyShader &shader;
     GLfloat *vertex;
     size_t vertex_size, vertex_cnt;
     GLuint texture;
     GLuint vertex_buffer, vertex_array;
-
-    Model(MyShader &shader, GLfloat *vertex,size_t vertex_size, size_t vertex_cnt, const char *image_path);
-    void ApplyTransformation();
+    GLfloat width, height;
+public:
+    Model(MyShader &shader, GLfloat *vertex,size_t vertex_size, size_t vertex_cnt, const char *image_path, GLfloat width, GLfloat height);
+    void ApplyTransformation(glm::vec3 position);
     void Show();
 };
 

@@ -6,9 +6,8 @@
 #include "Model.h"
 
 // пока без индексов
-Model::Model(MyShader &shader, GLfloat *vertex, size_t vertex_size, size_t vertex_cnt, const char *image_path):
-        shader(shader), vertex(vertex), vertex_size(vertex_size), vertex_cnt(vertex_cnt) {
-
+Model::Model(MyShader &shader, GLfloat *vertex, size_t vertex_size, size_t vertex_cnt, const char *image_path,GLfloat width, GLfloat height):
+        shader(shader), vertex(vertex), vertex_size(vertex_size), vertex_cnt(vertex_cnt), width(width), height(height) {
 
     glGenVertexArrays(1, &vertex_array);
     glGenBuffers(1, &vertex_buffer);
@@ -36,17 +35,28 @@ Model::Model(MyShader &shader, GLfloat *vertex, size_t vertex_size, size_t verte
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    int width, height;
-    unsigned char* image = SOIL_load_image(image_path, &width, &height, 0, SOIL_LOAD_RGB);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
+    int width_im, height_im;
+    unsigned char* image = SOIL_load_image(image_path, &width_im, &height_im, 0, SOIL_LOAD_RGB);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width_im, height_im, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
     glGenerateMipmap(GL_TEXTURE_2D);
     SOIL_free_image_data(image);
     glBindTexture(GL_TEXTURE_2D, 0);
     std::cout<<"Created sucsessfully "<<texture<<"\n";
 }
 
-void Model::ApplyTransformation() {
-
+void Model::ApplyTransformation(glm::vec3 position) {
+    glm::mat4 model(1.0f);
+    glm::mat4 view(1.0f);
+    glm::mat4 projection(1.0f);
+    model = glm::rotate(model, (GLfloat)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
+    view = glm::translate(view, position);
+    projection = glm::perspective(glm::radians(45.0f), width / height, 0.1f, 100.0f);
+    GLint modelLoc = glGetUniformLocation(shader.Program, "model");
+    GLint viewLoc = glGetUniformLocation(shader.Program, "view");
+    GLint projLoc = glGetUniformLocation(shader.Program, "projection");
+    glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+    glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
+    glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
 }
 
 void Model::Show() {

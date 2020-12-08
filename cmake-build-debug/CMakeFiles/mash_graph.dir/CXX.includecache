@@ -1517,6 +1517,12 @@ glfw3.h
 -
 SOIL.h
 -
+glm/glm.hpp
+-
+glm/gtc/matrix_transform.hpp
+-
+glm/gtc/type_ptr.hpp
+-
 
 C:/Learning/mash_graph/MyShader.cpp
 MyShader.h
