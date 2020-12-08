@@ -6,8 +6,8 @@
 #include "Model.h"
 
 // пока без индексов
-Model::Model(MyShader &shader, GLfloat *vertex, size_t vertex_size, size_t vertex_cnt, const char *image_path,GLfloat width, GLfloat height):
-        shader(shader), vertex(vertex), vertex_size(vertex_size), vertex_cnt(vertex_cnt), width(width), height(height) {
+Model::Model(MyShader &shader, Camera &camera, GLfloat *vertex, size_t vertex_size, size_t vertex_cnt, const char *image_path,GLfloat width, GLfloat height):
+        shader(shader), camera(camera), vertex(vertex), vertex_size(vertex_size), vertex_cnt(vertex_cnt), width(width), height(height)  {
 
     glGenVertexArrays(1, &vertex_array);
     glGenBuffers(1, &vertex_buffer);
@@ -41,7 +41,7 @@ Model::Model(MyShader &shader, GLfloat *vertex, size_t vertex_size, size_t verte
     glGenerateMipmap(GL_TEXTURE_2D);
     SOIL_free_image_data(image);
     glBindTexture(GL_TEXTURE_2D, 0);
-    std::cout<<"Created sucsessfully "<<texture<<"\n";
+    std::cout<<"Created sucsessfully\n";
 }
 
 void Model::ApplyTransformation(glm::vec3 position) {
@@ -57,6 +57,8 @@ void Model::ApplyTransformation(glm::vec3 position) {
     glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
     glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
     glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
+    GLint camLoc = glGetUniformLocation(shader.Program, "cameraView");
+    glUniformMatrix4fv(camLoc, 1, GL_FALSE, glm::value_ptr(camera.CameraView()));
 }
 
 void Model::Show() {

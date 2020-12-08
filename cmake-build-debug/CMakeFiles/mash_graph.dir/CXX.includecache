@@ -1504,6 +1504,22 @@ detail/setup.hpp
 detail/func_vector_relational.inl
 ../libs/include/glm/detail/func_vector_relational.inl
 
+C:/Learning/mash_graph/Camera.cpp
+Camera.h
+C:/Learning/mash_graph/Camera.h
+
+C:/Learning/mash_graph/Camera.h
+glm/glm.hpp
+-
+glm/gtc/matrix_transform.hpp
+-
+glm/gtc/type_ptr.hpp
+-
+glew.h
+-
+glfw3.h
+-
+
 C:/Learning/mash_graph/Model.cpp
 Model.h
 C:/Learning/mash_graph/Model.h
@@ -1511,6 +1527,8 @@ C:/Learning/mash_graph/Model.h
 C:/Learning/mash_graph/Model.h
 MyShader.h
 C:/Learning/mash_graph/MyShader.h
+Camera.h
+C:/Learning/mash_graph/Camera.h
 glew.h
 -
 glfw3.h
@@ -1615,6 +1633,8 @@ MyShader.h
 C:/Learning/mash_graph/MyShader.h
 Model.h
 C:/Learning/mash_graph/Model.h
+Camera.h
+C:/Learning/mash_graph/Camera.h
 string
 -
 sstream

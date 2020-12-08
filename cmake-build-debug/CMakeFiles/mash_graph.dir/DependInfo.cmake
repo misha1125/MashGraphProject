@@ -4,6 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
+  "C:/Learning/mash_graph/Camera.cpp" "C:/Learning/mash_graph/cmake-build-debug/CMakeFiles/mash_graph.dir/Camera.cpp.obj"
   "C:/Learning/mash_graph/Model.cpp" "C:/Learning/mash_graph/cmake-build-debug/CMakeFiles/mash_graph.dir/Model.cpp.obj"
   "C:/Learning/mash_graph/MyShader.cpp" "C:/Learning/mash_graph/cmake-build-debug/CMakeFiles/mash_graph.dir/MyShader.cpp.obj"
   "C:/Learning/mash_graph/main.cpp" "C:/Learning/mash_graph/cmake-build-debug/CMakeFiles/mash_graph.dir/main.cpp.obj"

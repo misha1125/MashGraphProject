@@ -5,6 +5,7 @@
 #include <SOIL.h>
 #include "MyShader.h"
 #include "Model.h"
+#include "Camera.h"
 #include <string>
 #include <sstream>
 #include <cstdio>
@@ -16,21 +17,19 @@
 
 
 GLuint vertex_buffer, vertex_array, index_buffer;
-
-
-GLuint PrepareImage();
+Camera mainCamera;
+void mouse_callback(GLFWwindow *window, double xpos, double ypos) {
+    mainCamera.mouse_callback(window,xpos,ypos);
+}
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode)
 {
-    // Когда пользователь нажимает ESC, мы устанавливаем свойство WindowShouldClose в true,
-    // и приложение после этого закроется
-    if(key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
+    if(key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
         glfwSetWindowShouldClose(window, GL_TRUE);
-    }
-    if (key == GLFW_KEY_UP && action == GLFW_PRESS) {
-
-    }
+   mainCamera.key_callback(window,key,scancode,action,mode);
 }
+
+
 
 GLfloat cube_vertices[] = {
         -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
@@ -105,11 +104,14 @@ int main()
     }
     int width, height;
     glfwGetFramebufferSize(window, &width, &height);
-    glfwSetKeyCallback(window, key_callback);
     glViewport(0, 0, width, height);
     MyShader shader("../vertex_shader.vs", "../fragment_shader.fs");
 
-    Model cube(shader, cube_vertices, sizeof(cube_vertices), 36, "../specular.png" ,width, height);
+    glfwSetKeyCallback(window, key_callback);
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    glfwSetCursorPosCallback(window, mouse_callback);
+
+    Model cube(shader, mainCamera, cube_vertices, sizeof(cube_vertices), 36, "../specular.png" ,width, height);
 
     glEnable(GL_DEPTH_TEST);
 
@@ -126,6 +128,11 @@ int main()
         cube.ApplyTransformation(glm::vec3(0,0,-3));
         cube.Show();
 
+        cube.ApplyTransformation(glm::vec3(-1,-1,-6));
+        cube.Show();
+
+        cube.ApplyTransformation(glm::vec3(4,-2,-10));
+        cube.Show();
 
         glfwSwapBuffers(window);
     }

@@ -122,6 +122,33 @@ mash_graph/fast:
 	$(MAKE) -f CMakeFiles\mash_graph.dir\build.make CMakeFiles/mash_graph.dir/build
 .PHONY : mash_graph/fast
 
+Camera.obj: Camera.cpp.obj
+
+.PHONY : Camera.obj
+
+# target to build an object file
+Camera.cpp.obj:
+	$(MAKE) -f CMakeFiles\mash_graph.dir\build.make CMakeFiles/mash_graph.dir/Camera.cpp.obj
+.PHONY : Camera.cpp.obj
+
+Camera.i: Camera.cpp.i
+
+.PHONY : Camera.i
+
+# target to preprocess a source file
+Camera.cpp.i:
+	$(MAKE) -f CMakeFiles\mash_graph.dir\build.make CMakeFiles/mash_graph.dir/Camera.cpp.i
+.PHONY : Camera.cpp.i
+
+Camera.s: Camera.cpp.s
+
+.PHONY : Camera.s
+
+# target to generate assembly for a file
+Camera.cpp.s:
+	$(MAKE) -f CMakeFiles\mash_graph.dir\build.make CMakeFiles/mash_graph.dir/Camera.cpp.s
+.PHONY : Camera.cpp.s
+
 Model.obj: Model.cpp.obj
 
 .PHONY : Model.obj
@@ -212,6 +239,9 @@ help:
 	@echo ... mash_graph
 	@echo ... edit_cache
 	@echo ... rebuild_cache
+	@echo ... Camera.obj
+	@echo ... Camera.i
+	@echo ... Camera.s
 	@echo ... Model.obj
 	@echo ... Model.i
 	@echo ... Model.s

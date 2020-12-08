@@ -3,7 +3,7 @@ project(mash_graph)
 
 set(CMAKE_CXX_STANDARD 14)
 
-set(SOURCE_FILES main.cpp MyShader.cpp MyShader.h Model.cpp Model.h)
+set(SOURCE_FILES main.cpp MyShader.cpp MyShader.h Model.cpp Model.h Camera.cpp Camera.h)
 
 find_package(OpenGL REQUIRED)
 
