@@ -41,14 +41,14 @@ Model::Model(MyShader &shader, Camera &camera, GLfloat *vertex, size_t vertex_si
     glGenerateMipmap(GL_TEXTURE_2D);
     SOIL_free_image_data(image);
     glBindTexture(GL_TEXTURE_2D, 0);
-    std::cout<<"Created sucsessfully\n";
+    std::cout<<"Created sucsessfully "<< vertex_array<<" "<<texture<<" "<<shader.Program<<"\n";
 }
 
+
 void Model::ApplyTransformation(glm::vec3 position) {
-    glm::mat4 model(1.0f);
+    model = glm::mat4(1.0f);
     glm::mat4 view(1.0f);
     glm::mat4 projection(1.0f);
-    model = glm::rotate(model, (GLfloat)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
     view = glm::translate(view, position);
     projection = glm::perspective(glm::radians(45.0f), width / height, 0.1f, 100.0f);
     GLint modelLoc = glGetUniformLocation(shader.Program, "model");
@@ -61,10 +61,33 @@ void Model::ApplyTransformation(glm::vec3 position) {
     glUniformMatrix4fv(camLoc, 1, GL_FALSE, glm::value_ptr(camera.CameraView()));
 }
 
+
+
 void Model::Show() {
+
+    glBindVertexArray(vertex_array);
+    glDrawArrays(GL_TRIANGLES, 0, vertex_cnt);
+    glBindVertexArray(0);
+}
+
+void Model::ApplyRotation(glm::vec3 axis, GLfloat angle) {
+    model = glm::rotate(model, glm::radians(angle), axis);
+    GLint modelLoc = glGetUniformLocation(shader.Program, "model");
+    glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+}
+
+void Model::ApplyScale(glm::vec3 scale) {
+    model = glm::scale(model,scale);
+    GLint modelLoc = glGetUniformLocation(shader.Program, "model");
+    glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+}
+
+void Model::AddLight(glm::vec3 lightColor) {
+    GLint lightLoc = glGetUniformLocation(shader.Program, "lightColor");
+    glUniform3f(lightLoc, lightColor.x, lightColor.y, lightColor.z);
+}
+
+void Model::ApplyShader() {
     glBindTexture(GL_TEXTURE_2D, texture);
     shader.Apply();
-    glBindVertexArray(vertex_array);
-    glDrawArrays(GL_TRIANGLES, 0, 36);
-    glBindVertexArray(0);
 }

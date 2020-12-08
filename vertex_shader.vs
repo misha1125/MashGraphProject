@@ -13,6 +13,7 @@ uniform mat4 cameraView;
 
 void main()
 {
+
     gl_Position = projection * cameraView * view * model * vec4(position, 1.0f);
     ourColor = color;
     TexCoord = texCoord;

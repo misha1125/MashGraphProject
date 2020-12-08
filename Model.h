@@ -25,10 +25,15 @@ class Model {
     GLuint texture;
     GLuint vertex_buffer, vertex_array;
     GLfloat width, height;
+    glm::mat4 model;
 public:
     Model(MyShader &shader, Camera &camera,  GLfloat *vertex,size_t vertex_size, size_t vertex_cnt, const char *image_path, GLfloat width, GLfloat height);
     void ApplyTransformation(glm::vec3 position);
+    void ApplyRotation(glm::vec3 axis, GLfloat angle);
+    void ApplyScale(glm::vec3 scale);
     void Show();
+    void AddLight(glm::vec3 lightColor);
+    void ApplyShader();
 };
 
 
