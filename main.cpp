@@ -121,16 +121,16 @@ int main()
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     glfwSetCursorPosCallback(window, mouse_callback);
 
-    MyShader lightShader("../vertex_shader.vs", "../fragment_shader_light.fs");
+    MyShader lightShader("../vertex_shader.vs", "../fragment_shader_diffuse_map.fs");
     Model cube(lightShader, mainCamera, cube_vertices, sizeof(cube_vertices), 36, "../specular.png", width, height, true);
     Model plane(lightShader, mainCamera, plane_vertices, sizeof(plane_vertices), 6, "../chess.png", width, height, true);
 
-    MyShader shader("../vertex_shader.vs", "../fragment_shader.fs");
+    MyShader shader("../vertex_shader.vs", "../fragment_shader_light_source.fs");
     Model lightCube(shader, mainCamera, cube_vertices, sizeof(cube_vertices), 36, "../light.png", width, height, true);
 
     glEnable(GL_DEPTH_TEST);
     glm::vec3 lightSource(0, 4.0f, 0);
-
+    glm::vec3 lightColor(1,1,1);
     while(!glfwWindowShouldClose(window))
     {
         glfwPollEvents();
@@ -139,21 +139,25 @@ int main()
         //wireframe для отладки
         //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
+        //lightColor = glm::vec3(0.5f*sin(glfwGetTime()*0.2),0.5f*sin(glfwGetTime()*0.1),0.5f*sin(glfwGetTime()*0.5));
 
         lightCube.ApplyShader();
+        lightCube.AddLight(lightColor, lightSource);
         lightCube.ApplyTransformation(lightSource);
         lightCube.Show();
 
 
         cube.ApplyShader();
         cube.ApplyTransformation(glm::vec3(0,0,0));
-        cube.AddLight(glm::vec3(1,1,1),lightSource);
+        cube.AddLight(lightColor, lightSource);
+        cube.ApplyLightParameters();
         cube.Show();
 
         cube.ApplyShader();
         cube.ApplyTransformation(glm::vec3(0,0,-3));
         cube.ApplyRotation(glm::vec3(0,1,1),(GLfloat)glfwGetTime()*50.0f);
-        cube.AddLight(glm::vec3(1,1,1),lightSource);
+        cube.AddLight(lightColor ,lightSource);
+        cube.ApplyLightParameters();
         cube.Show();
 
 
@@ -161,23 +165,22 @@ int main()
         cube.ApplyShader();
         cube.ApplyTransformation(glm::vec3(-1,-1,-6));
         cube.ApplyRotation(glm::vec3(0,1,1),(GLfloat)glfwGetTime()*50.0f);
-        cube.AddLight(glm::vec3(1,1,1),lightSource);
+        cube.AddLight(lightColor, lightSource);
+        cube.ApplyLightParameters();
         cube.Show();
-
-
 
         cube.ApplyShader();
         cube.ApplyTransformation(glm::vec3(4,-2,-10));
         cube.ApplyRotation(glm::vec3(0,1,1),(GLfloat)glfwGetTime()*50.0f);
-        cube.AddLight(glm::vec3(1,1,1),lightSource);
+        cube.AddLight(lightColor, lightSource);
+        cube.ApplyLightParameters();
         cube.Show();
-
-
 
         plane.ApplyShader();
         plane.ApplyTransformation(glm::vec3(1,-3,-6));
         plane.ApplyScale(glm::vec3(10,1,10));
-        plane.AddLight(glm::vec3(1,1,1),lightSource);
+        plane.AddLight(lightColor,lightSource);
+        plane.ApplyLightParameters(glm::vec3(1,0.5f,0.31f), glm::vec3(1,0.5f,0.31f), glm::vec3(0.6,0.6,0.6),64);
         plane.Show();
 
 

@@ -425,6 +425,28 @@ CMakeFiles/mash_graph.dir/Model.cpp.obj
  C:/Learning/mash_graph/libs/include/glew.h
  C:/Learning/mash_graph/libs/include/glfw3.h
 CMakeFiles/mash_graph.dir/MyShader.cpp.obj
+ ../libs/include/glm/./detail/_swizzle.hpp
+ ../libs/include/glm/./detail/_swizzle_func.hpp
+ ../libs/include/glm/./detail/compute_vector_relational.hpp
+ ../libs/include/glm/./detail/qualifier.hpp
+ ../libs/include/glm/./detail/setup.hpp
+ ../libs/include/glm/./detail/type_vec3.hpp
+ ../libs/include/glm/./detail/type_vec3.inl
+ ../libs/include/glm/./ext/scalar_int_sized.hpp
+ ../libs/include/glm/./ext/scalar_uint_sized.hpp
+ ../libs/include/glm/./ext/vector_bool3.hpp
+ ../libs/include/glm/./ext/vector_bool3_precision.hpp
+ ../libs/include/glm/./ext/vector_double3.hpp
+ ../libs/include/glm/./ext/vector_double3_precision.hpp
+ ../libs/include/glm/./ext/vector_float3.hpp
+ ../libs/include/glm/./ext/vector_float3_precision.hpp
+ ../libs/include/glm/./ext/vector_int3.hpp
+ ../libs/include/glm/./ext/vector_int3_sized.hpp
+ ../libs/include/glm/./ext/vector_uint3.hpp
+ ../libs/include/glm/./ext/vector_uint3_sized.hpp
+ ../libs/include/glm/./simd/neon.h
+ ../libs/include/glm/./simd/platform.h
+ ../libs/include/glm/vec3.hpp
  C:/Learning/mash_graph/MyShader.cpp
  C:/Learning/mash_graph/MyShader.h
  C:/Learning/mash_graph/libs/include/glew.h

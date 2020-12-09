@@ -76,3 +76,13 @@ void MyShader::PrintErrorIfHas(GLuint shader_id) const {
 void MyShader::Apply() {
     glUseProgram(this->Program);
 }
+
+void MyShader::SetVector3(const char *name, glm::vec3 vec) {
+    GLint vecLoc = glGetUniformLocation(Program, name);
+    glUniform3f(vecLoc, vec.x, vec.y, vec.z);
+}
+
+void MyShader::SetFloat(const char *name, GLfloat val) {
+    GLint viewPosLoc = glGetUniformLocation(Program, name);
+    glUniform1f(viewPosLoc, val);
+}

@@ -9,6 +9,7 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include <glm/vec3.hpp>
 
 #define GLEW_STATIC
 #include "libs/include/glew.h"
@@ -30,6 +31,8 @@ public:
     void ApplyShadersToProgram(GLuint vertex, GLuint fragment);
 
     void ApplyCodeToShader(const GLchar *shader_code, GLuint &shader_id, GLuint type);
+    void SetVector3(const char * name, glm::vec3 vec);
+    void SetFloat(const char * name, GLfloat val);
 };
 
 

@@ -102,3 +102,10 @@ void Model::ApplyShader() {
     glBindTexture(GL_TEXTURE_2D, texture);
     shader.Apply();
 }
+
+void Model::ApplyLightParameters(glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, GLfloat shines) {
+    shader.SetVector3("material.ambient", ambient);
+    shader.SetVector3("material.diffuse", diffuse);
+    shader.SetVector3("material.specular", specular);
+    shader.SetFloat("material.shininess", shines);
+}
