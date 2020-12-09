@@ -18,6 +18,8 @@
 #include <glm/gtc/type_ptr.hpp>
 
 class Model {
+
+
     MyShader &shader;
     Camera &camera;
     GLfloat *vertex;
@@ -27,12 +29,13 @@ class Model {
     GLfloat width, height;
     glm::mat4 model;
 public:
-    Model(MyShader &shader, Camera &camera,  GLfloat *vertex,size_t vertex_size, size_t vertex_cnt, const char *image_path, GLfloat width, GLfloat height);
+    Model(MyShader &shader, Camera &camera,  GLfloat *vertex,size_t vertex_size, size_t vertex_cnt, const char *image_path,
+          GLfloat width, GLfloat height, bool has_normal);
     void ApplyTransformation(glm::vec3 position);
     void ApplyRotation(glm::vec3 axis, GLfloat angle);
     void ApplyScale(glm::vec3 scale);
     void Show();
-    void AddLight(glm::vec3 lightColor);
+    void AddLight(glm::vec3 lightColor, glm::vec3 lightSource);
     void ApplyShader();
 };
 

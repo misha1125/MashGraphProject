@@ -32,58 +32,58 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 
 
 GLfloat cube_vertices[] = {
-        -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-        0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
-        0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-        0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-        -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,  0.0f,  0.0f, -1.0f,
+        0.5f, -0.5f, -0.5f,  1.0f, 0.0f,  0.0f,  0.0f, -1.0f,
+        0.5f,  0.5f, -0.5f,  1.0f, 1.0f,  0.0f,  0.0f, -1.0f,
+        0.5f,  0.5f, -0.5f,  1.0f, 1.0f,  0.0f,  0.0f, -1.0f,
+        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,  0.0f,  0.0f, -1.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,  0.0f,  0.0f, -1.0f,
 
-        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-        0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-        0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-        0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-        -0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
-        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,  0.0f,  0.0f,  1.0f,
+        0.5f, -0.5f,  0.5f,  1.0f, 0.0f,  0.0f,  0.0f,  1.0f,
+        0.5f,  0.5f,  0.5f,  1.0f, 1.0f,  0.0f,  0.0f,  1.0f,
+        0.5f,  0.5f,  0.5f,  1.0f, 1.0f,  0.0f,  0.0f,  1.0f,
+        -0.5f,  0.5f,  0.5f,  0.0f, 1.0f,  0.0f,  0.0f,  1.0f,
+        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,  0.0f,  0.0f,  1.0f,
 
-        -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-        -0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-        -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+        -0.5f,  0.5f,  0.5f,  1.0f, 0.0f, -1.0f,  0.0f,  0.0f,
+        -0.5f,  0.5f, -0.5f,  1.0f, 1.0f, -1.0f,  0.0f,  0.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f, -1.0f,  0.0f,  0.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f, -1.0f,  0.0f,  0.0f,
+        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f, -1.0f,  0.0f,  0.0f,
+        -0.5f,  0.5f,  0.5f,  1.0f, 0.0f, -1.0f,  0.0f,  0.0f,
 
-        0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-        0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-        0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-        0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-        0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-        0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+        0.5f,  0.5f,  0.5f,  1.0f, 0.0f,  1.0f,  0.0f,  0.0f,
+        0.5f,  0.5f, -0.5f,  1.0f, 1.0f,  1.0f,  0.0f,  0.0f,
+        0.5f, -0.5f, -0.5f,  0.0f, 1.0f,  1.0f,  0.0f,  0.0f,
+        0.5f, -0.5f, -0.5f,  0.0f, 1.0f,  1.0f,  0.0f,  0.0f,
+        0.5f, -0.5f,  0.5f,  0.0f, 0.0f,  1.0f,  0.0f,  0.0f,
+        0.5f,  0.5f,  0.5f,  1.0f, 0.0f,  1.0f,  0.0f,  0.0f,
 
-        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-        0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
-        0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-        0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f, 0.0f, -1.0f,  0.0f,
+        0.5f, -0.5f, -0.5f,  1.0f, 1.0f, 0.0f, -1.0f,  0.0f,
+        0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 0.0f, -1.0f,  0.0f,
+        0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 0.0f, -1.0f,  0.0f,
+        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f, 0.0f, -1.0f,  0.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f, 0.0f, -1.0f,  0.0f,
 
-        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-        0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-        0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-        0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-        -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
-        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
+        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f, 0.0f,  1.0f,  0.0f,
+        0.5f,  0.5f, -0.5f,  1.0f, 1.0f, 0.0f,  1.0f,  0.0f,
+        0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f,  1.0f,  0.0f,
+        0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f,  1.0f,  0.0f,
+        -0.5f,  0.5f,  0.5f,  0.0f, 0.0f, 0.0f,  1.0f,  0.0f,
+        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f, 0.0f,  1.0f,  0.0f
 };
 
 
 
 GLfloat plane_vertices[] = {
-        -0.5f, 0, -0.5f,  0.0f, 1.0f,
-        0.5f, 0, -0.5f,  1.0f, 1.0f,
-        0.5f, 0,  0.5f,  1.0f, 0.0f,
-        0.5f, 0,  0.5f,  1.0f, 0.0f,
-        -0.5f, 0,  0.5f,  0.0f, 0.0f,
-        -0.5f, 0, -0.5f,  0.0f, 1.0f,
+        -0.5f, 0, -0.5f,  0.0f, 1.0f, 0.0f,  1.0f,  0.0f,
+        0.5f, 0, -0.5f,  1.0f, 1.0f,0.0f,  1.0f,  0.0f,
+        0.5f, 0,  0.5f,  1.0f, 0.0f,0.0f,  1.0f,  0.0f,
+        0.5f, 0,  0.5f,  1.0f, 0.0f,0.0f,  1.0f,  0.0f,
+        -0.5f, 0,  0.5f,  0.0f, 0.0f,0.0f,  1.0f,  0.0f,
+        -0.5f, 0, -0.5f,  0.0f, 1.0f,0.0f,  1.0f,  0.0f,
 };
 
 
@@ -122,14 +122,14 @@ int main()
     glfwSetCursorPosCallback(window, mouse_callback);
 
     MyShader lightShader("../vertex_shader.vs", "../fragment_shader_light.fs");
-    Model cube(lightShader, mainCamera, cube_vertices, sizeof(cube_vertices), 36, "../specular.png" ,width, height);
-    Model plane(lightShader, mainCamera, plane_vertices, sizeof(plane_vertices), 6, "../chess.png" ,width, height);
+    Model cube(lightShader, mainCamera, cube_vertices, sizeof(cube_vertices), 36, "../specular.png", width, height, true);
+    Model plane(lightShader, mainCamera, plane_vertices, sizeof(plane_vertices), 6, "../chess.png", width, height, true);
 
     MyShader shader("../vertex_shader.vs", "../fragment_shader.fs");
-    Model lightCube(shader, mainCamera, cube_vertices, sizeof(cube_vertices), 36, "../specular.png" ,width, height);
+    Model lightCube(shader, mainCamera, cube_vertices, sizeof(cube_vertices), 36, "../light.png", width, height, true);
 
     glEnable(GL_DEPTH_TEST);
-    glm::vec3 lightSource(1.2f, 1.0f, 2.0f);
+    glm::vec3 lightSource(0, 4.0f, 0);
 
     while(!glfwWindowShouldClose(window))
     {
@@ -139,36 +139,46 @@ int main()
         //wireframe для отладки
         //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
+
         lightCube.ApplyShader();
-        lightCube.ApplyTransformation(glm::vec3(0,0,-2));
+        lightCube.ApplyTransformation(lightSource);
         lightCube.Show();
+
+
+        cube.ApplyShader();
+        cube.ApplyTransformation(glm::vec3(0,0,0));
+        cube.AddLight(glm::vec3(1,1,1),lightSource);
+        cube.Show();
 
         cube.ApplyShader();
         cube.ApplyTransformation(glm::vec3(0,0,-3));
         cube.ApplyRotation(glm::vec3(0,1,1),(GLfloat)glfwGetTime()*50.0f);
+        cube.AddLight(glm::vec3(1,1,1),lightSource);
         cube.Show();
-        cube.AddLight(glm::vec3(1,1,1));
+
 
 
         cube.ApplyShader();
         cube.ApplyTransformation(glm::vec3(-1,-1,-6));
         cube.ApplyRotation(glm::vec3(0,1,1),(GLfloat)glfwGetTime()*50.0f);
+        cube.AddLight(glm::vec3(1,1,1),lightSource);
         cube.Show();
-        cube.AddLight(glm::vec3(1,1,1));
+
 
 
         cube.ApplyShader();
         cube.ApplyTransformation(glm::vec3(4,-2,-10));
         cube.ApplyRotation(glm::vec3(0,1,1),(GLfloat)glfwGetTime()*50.0f);
+        cube.AddLight(glm::vec3(1,1,1),lightSource);
         cube.Show();
-        cube.AddLight(glm::vec3(1,1,1));
+
 
 
         plane.ApplyShader();
         plane.ApplyTransformation(glm::vec3(1,-3,-6));
         plane.ApplyScale(glm::vec3(10,1,10));
+        plane.AddLight(glm::vec3(1,1,1),lightSource);
         plane.Show();
-        plane.AddLight(glm::vec3(1,1,1));
 
 
         glfwSwapBuffers(window);

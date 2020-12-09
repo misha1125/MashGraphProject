@@ -14,7 +14,9 @@
 
 
 class Camera {
+public:
     glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
+private:
     glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
     glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
     glm::vec3 cameraDirection = glm::normalize(cameraPos - cameraTarget);
@@ -29,6 +31,7 @@ class Camera {
     GLfloat yaw   = -90.0f;
     GLfloat pitch = 0.0f;
 public:
+
     Camera();
     glm::mat4 CameraView();
     void do_movement();

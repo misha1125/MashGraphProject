@@ -6,7 +6,8 @@
 #include "Model.h"
 
 // пока без индексов
-Model::Model(MyShader &shader, Camera &camera, GLfloat *vertex, size_t vertex_size, size_t vertex_cnt, const char *image_path,GLfloat width, GLfloat height):
+Model::Model(MyShader &shader, Camera &camera, GLfloat *vertex, size_t vertex_size, size_t vertex_cnt, const char *image_path,
+             GLfloat width, GLfloat height, bool has_normal):
         shader(shader), camera(camera), vertex(vertex), vertex_size(vertex_size), vertex_cnt(vertex_cnt), width(width), height(height)  {
 
     glGenVertexArrays(1, &vertex_array);
@@ -18,13 +19,19 @@ Model::Model(MyShader &shader, Camera &camera, GLfloat *vertex, size_t vertex_si
     glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer);
     glBufferData(GL_ARRAY_BUFFER, vertex_size, vertex, GL_STATIC_DRAW);
 
-    //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, index_buffer);
-    //glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (GLvoid*)0);
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
-    glEnableVertexAttribArray(2);
+    if (!has_normal){
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (GLvoid*)0);
+        glEnableVertexAttribArray(0);
+        glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
+        glEnableVertexAttribArray(2);
+    } else {
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)0);
+        glEnableVertexAttribArray(0);
+        glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
+        glEnableVertexAttribArray(2);
+        glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)(5 * sizeof(GLfloat)));
+        glEnableVertexAttribArray(3);
+    }
 
     glBindVertexArray(0);
 
@@ -82,9 +89,13 @@ void Model::ApplyScale(glm::vec3 scale) {
     glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 }
 
-void Model::AddLight(glm::vec3 lightColor) {
+void Model::AddLight(glm::vec3 lightColor, glm::vec3 lightSource) {
     GLint lightLoc = glGetUniformLocation(shader.Program, "lightColor");
     glUniform3f(lightLoc, lightColor.x, lightColor.y, lightColor.z);
+    GLint lightPosLoc = glGetUniformLocation(shader.Program, "lightPos");
+    glUniform3f(lightPosLoc, lightSource.x, lightSource.y, lightSource.z);
+    GLint viewPosLoc = glGetUniformLocation(shader.Program, "viewPos");
+    glUniform3f(viewPosLoc, camera.cameraPos.x, camera.cameraPos.y, camera.cameraPos.z);
 }
 
 void Model::ApplyShader() {
