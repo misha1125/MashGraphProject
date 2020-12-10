@@ -1,3 +1,4 @@
+ЭТОТ ШЕЙДЕР НЕПРАВИЛЬНЫЙ, НЕ ИСПОЛЬЗУЙ ЕГО
 #version 330 core
 in vec3 ourColor;
 in vec2 TexCoord;

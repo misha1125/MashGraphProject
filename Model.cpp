@@ -34,20 +34,7 @@ Model::Model(MyShader &shader, Camera &camera, GLfloat *vertex, size_t vertex_si
     }
 
     glBindVertexArray(0);
-
-
-    glGenTextures(1, &texture);
-    glBindTexture(GL_TEXTURE_2D, texture);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    int width_im, height_im;
-    unsigned char* image = SOIL_load_image(image_path, &width_im, &height_im, 0, SOIL_LOAD_RGB);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width_im, height_im, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
-    glGenerateMipmap(GL_TEXTURE_2D);
-    SOIL_free_image_data(image);
-    glBindTexture(GL_TEXTURE_2D, 0);
+    LoadTexture(image_path, texture);
     std::cout<<"Created sucsessfully "<< vertex_array<<" "<<texture<<" "<<shader.Program<<"\n";
 }
 
@@ -96,11 +83,16 @@ void Model::AddLight(glm::vec3 lightColor, glm::vec3 lightSource) {
     glUniform3f(lightPosLoc, lightSource.x, lightSource.y, lightSource.z);
     GLint viewPosLoc = glGetUniformLocation(shader.Program, "viewPos");
     glUniform3f(viewPosLoc, camera.cameraPos.x, camera.cameraPos.y, camera.cameraPos.z);
+
 }
 
 void Model::ApplyShader() {
-    glBindTexture(GL_TEXTURE_2D, texture);
+    //glActiveTexture(GL_TEXTURE0);
     shader.Apply();
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, texture);
+
+
 }
 
 void Model::ApplyLightParameters(glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, GLfloat shines) {
@@ -109,3 +101,41 @@ void Model::ApplyLightParameters(glm::vec3 ambient, glm::vec3 diffuse, glm::vec3
     shader.SetVector3("material.specular", specular);
     shader.SetFloat("material.shininess", shines);
 }
+
+void Model::LoadSpectacularTexture(const char *path) {
+    LoadTexture(path, spectecularTexture);
+}
+
+void Model::ApplySpectacularTexture() {
+    shader.SetInt("material.specularTex", 1);
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D, spectecularTexture);
+}
+
+void Model::LoadNormalTexture(const char *path) {
+   LoadTexture(path, normalTexture);
+}
+
+void Model::ApplyNormalTexture() {
+    shader.SetInt("normalTexture", 2);
+    glActiveTexture(GL_TEXTURE2);
+    glBindTexture(GL_TEXTURE_2D, normalTexture);
+}
+
+void Model::LoadTexture(const char *path, GLuint &texture) {
+    glGenTextures(1, &texture);
+    glBindTexture(GL_TEXTURE_2D, texture);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    int width_im, height_im;
+    unsigned char* image = SOIL_load_image(path, &width_im, &height_im, 0, SOIL_LOAD_RGB);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width_im, height_im, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
+    glGenerateMipmap(GL_TEXTURE_2D);
+    SOIL_free_image_data(image);
+    glBindTexture(GL_TEXTURE_2D, 0);
+
+    std::cout<<"Loaded sucsessfully "<< texture<<"\n";
+}
+

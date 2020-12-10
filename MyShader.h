@@ -33,6 +33,7 @@ public:
     void ApplyCodeToShader(const GLchar *shader_code, GLuint &shader_id, GLuint type);
     void SetVector3(const char * name, glm::vec3 vec);
     void SetFloat(const char * name, GLfloat val);
+    void SetInt(const char * name, GLint val);
 };
 
 

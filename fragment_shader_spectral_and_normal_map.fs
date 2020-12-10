@@ -1,8 +1,8 @@
 #version 330 core
 in vec3 ourColor;
 in vec2 TexCoord;
-in vec3 Normal;
 in vec3 FragPos;
+in mat3 normalChange;
 
 out vec4 color;
 
@@ -19,11 +19,13 @@ uniform sampler2D ourTexture;
 uniform vec3 lightColor;
 uniform vec3 lightPos;
 uniform vec3 viewPos;
+uniform sampler2D normalTexture;
 
 void main()
 {
     vec3 ambient = material.ambient * lightColor * vec3(texture(ourTexture, TexCoord));
-    vec3 norm = normalize(Normal);
+    vec3 norm = normalChange * texture(normalTexture, TexCoord).rgb;
+    norm = normalize(norm * 2.0 - 1.0);
     vec3 lightDir = normalize(lightPos - FragPos);
     float diff = max(dot(norm, lightDir), 0.0);
     vec3 diffuse = diff * lightColor * material.diffuse * vec3(texture(ourTexture, TexCoord));

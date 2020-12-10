@@ -121,15 +121,24 @@ int main()
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     glfwSetCursorPosCallback(window, mouse_callback);
 
-    MyShader lightShader("../vertex_shader.vs", "../fragment_shader_diffuse_map.fs");
-    Model cube(lightShader, mainCamera, cube_vertices, sizeof(cube_vertices), 36, "../specular.png", width, height, true);
-    Model plane(lightShader, mainCamera, plane_vertices, sizeof(plane_vertices), 6, "../chess.png", width, height, true);
+    MyShader lightedShader("../vertex_shader.vs", "../fragment_shader_diffuse_map.fs");
+    Model cube(lightedShader, mainCamera, cube_vertices, sizeof(cube_vertices), 36, "../specular.png", width, height, true);
+    Model plane(lightedShader, mainCamera, plane_vertices, sizeof(plane_vertices), 6, "../chess.png", width, height, true);
+
+    MyShader spectacularShader("../vertex_shader.vs", "../fragment_shader_spectral_map.fs");
+    Model sCube(spectacularShader, mainCamera, cube_vertices, sizeof(cube_vertices), 36, "../box.png", width, height, true);
+    sCube.LoadSpectacularTexture("../spec_box.png");
+
+    MyShader normalAndSpectacularShader("../vertex_shader_normal_map.vs", "../fragment_shader_spectral_and_normal_map.fs");
+    Model nCube(normalAndSpectacularShader, mainCamera, cube_vertices, sizeof(cube_vertices), 36, "../brickwall.jpg", width, height, true);
+    nCube.LoadSpectacularTexture("../brickwall_spec.jpg");
+    nCube.LoadNormalTexture("../brickwall_normal.jpg");
 
     MyShader shader("../vertex_shader.vs", "../fragment_shader_light_source.fs");
     Model lightCube(shader, mainCamera, cube_vertices, sizeof(cube_vertices), 36, "../light.png", width, height, true);
 
     glEnable(GL_DEPTH_TEST);
-    glm::vec3 lightSource(0, 4.0f, 0);
+    glm::vec3 lightSource(0, 1, -4);
     glm::vec3 lightColor(1,1,1);
     while(!glfwWindowShouldClose(window))
     {
@@ -147,19 +156,22 @@ int main()
         lightCube.Show();
 
 
-        cube.ApplyShader();
-        cube.ApplyTransformation(glm::vec3(0,0,0));
-        cube.AddLight(lightColor, lightSource);
-        cube.ApplyLightParameters();
-        cube.Show();
 
-        cube.ApplyShader();
-        cube.ApplyTransformation(glm::vec3(0,0,-3));
-        cube.ApplyRotation(glm::vec3(0,1,1),(GLfloat)glfwGetTime()*50.0f);
-        cube.AddLight(lightColor ,lightSource);
-        cube.ApplyLightParameters();
-        cube.Show();
+        sCube.ApplyShader();
+        sCube.ApplySpectacularTexture();
+        sCube.ApplyTransformation(glm::vec3(0,0,-1));
+        sCube.AddLight(lightColor, lightSource);
+        sCube.ApplyLightParameters();
+        sCube.Show();
 
+        nCube.ApplyShader();
+        nCube.ApplySpectacularTexture();
+        nCube.ApplyNormalTexture();
+        nCube.ApplyTransformation(glm::vec3(0,0,-2));
+        //cube.ApplyRotation(glm::vec3(0,0,1),(GLfloat)glfwGetTime()*20.0f);
+        nCube.AddLight(lightColor, lightSource);
+        nCube.ApplyLightParameters();
+        nCube.Show();
 
 
         cube.ApplyShader();

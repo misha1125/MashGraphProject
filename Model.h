@@ -25,9 +25,12 @@ class Model {
     GLfloat *vertex;
     size_t vertex_size, vertex_cnt;
     GLuint texture;
+    GLuint spectecularTexture;
+    GLuint normalTexture;
     GLuint vertex_buffer, vertex_array;
     GLfloat width, height;
     glm::mat4 model;
+    void LoadTexture(const char *path, GLuint &texture);
 public:
     Model(MyShader &shader, Camera &camera,  GLfloat *vertex,size_t vertex_size, size_t vertex_cnt, const char *image_path,
           GLfloat width, GLfloat height, bool has_normal);
@@ -39,6 +42,10 @@ public:
     void ApplyLightParameters(glm::vec3 ambient = glm::vec3(0.2f, 0.2f, 0.2f), glm::vec3 diffuse = glm::vec3(0.2f, 0.2f, 0.2f),
                               glm::vec3 specular = glm::vec3(0.2f, 0.2f, 0.2f), GLfloat shines = 32);
     void ApplyShader();
+    void LoadSpectacularTexture(const char* path);
+    void ApplySpectacularTexture();
+    void LoadNormalTexture(const char* path);
+    void ApplyNormalTexture();
 };
 
 

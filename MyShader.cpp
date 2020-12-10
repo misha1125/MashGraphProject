@@ -86,3 +86,8 @@ void MyShader::SetFloat(const char *name, GLfloat val) {
     GLint viewPosLoc = glGetUniformLocation(Program, name);
     glUniform1f(viewPosLoc, val);
 }
+
+void MyShader::SetInt(const char *name, GLint val) {
+    GLint viewPosLoc = glGetUniformLocation(Program, name);
+    glUniform1i(viewPosLoc, val);
+}
