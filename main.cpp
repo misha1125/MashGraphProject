@@ -101,7 +101,7 @@ int main()
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     //Выключение возможности изменения размера окна
     glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
-    GLFWwindow* window = glfwCreateWindow(800, 600, "Mordvincev", nullptr, nullptr);
+    GLFWwindow* window = glfwCreateWindow(1000, 900, "Mordvincev", nullptr, nullptr);
     if (window == nullptr)
     {
         std::cout << "Failed to create GLFW window" << std::endl;
@@ -129,6 +129,7 @@ int main()
     Model sCube(spectacularShader, mainCamera, cube_vertices, sizeof(cube_vertices), 36, "../box.png", width, height, true);
     sCube.LoadSpectacularTexture("../spec_box.png");
 
+    //На самом деле все сложнее,нужно так же добавить тангенсальное пространство.
     MyShader normalAndSpectacularShader("../vertex_shader_normal_map.vs", "../fragment_shader_spectral_and_normal_map.fs");
     Model nCube(normalAndSpectacularShader, mainCamera, cube_vertices, sizeof(cube_vertices), 36, "../brickwall.jpg", width, height, true);
     nCube.LoadSpectacularTexture("../brickwall_spec.jpg");
@@ -138,7 +139,7 @@ int main()
     Model lightCube(shader, mainCamera, cube_vertices, sizeof(cube_vertices), 36, "../light.png", width, height, true);
 
     glEnable(GL_DEPTH_TEST);
-    glm::vec3 lightSource(0, 1, -4);
+    glm::vec3 lightSource(0, -1, 0);
     glm::vec3 lightColor(1,1,1);
     while(!glfwWindowShouldClose(window))
     {
@@ -159,16 +160,17 @@ int main()
 
         sCube.ApplyShader();
         sCube.ApplySpectacularTexture();
-        sCube.ApplyTransformation(glm::vec3(0,0,-1));
+        sCube.ApplyTransformation(glm::vec3(0,0,-6));
         sCube.AddLight(lightColor, lightSource);
         sCube.ApplyLightParameters();
         sCube.Show();
+
 
         nCube.ApplyShader();
         nCube.ApplySpectacularTexture();
         nCube.ApplyNormalTexture();
         nCube.ApplyTransformation(glm::vec3(0,0,-2));
-        //cube.ApplyRotation(glm::vec3(0,0,1),(GLfloat)glfwGetTime()*20.0f);
+        nCube.ApplyRotation(glm::normalize(glm::vec3(1.0, 0.0, 1.0)),(float)glfwGetTime() * -10.0f);
         nCube.AddLight(lightColor, lightSource);
         nCube.ApplyLightParameters();
         nCube.Show();
@@ -192,7 +194,7 @@ int main()
         plane.ApplyTransformation(glm::vec3(1,-3,-6));
         plane.ApplyScale(glm::vec3(10,1,10));
         plane.AddLight(lightColor,lightSource);
-        plane.ApplyLightParameters(glm::vec3(1,0.5f,0.31f), glm::vec3(1,0.5f,0.31f), glm::vec3(0.6,0.6,0.6),64);
+        //plane.ApplyLightParameters(glm::vec3(1,0.5f,0.31f), glm::vec3(1,0.5f,0.31f), glm::vec3(0.6,0.6,0.6),64);
         plane.Show();
 
 

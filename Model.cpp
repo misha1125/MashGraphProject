@@ -100,6 +100,10 @@ void Model::ApplyLightParameters(glm::vec3 ambient, glm::vec3 diffuse, glm::vec3
     shader.SetVector3("material.diffuse", diffuse);
     shader.SetVector3("material.specular", specular);
     shader.SetFloat("material.shininess", shines);
+
+    shader.SetFloat("material.constant",  0.2f);
+    shader.SetFloat("material.linear",    0.07f);
+    shader.SetFloat("material.quadratic", 0.017f);
 }
 
 void Model::LoadSpectacularTexture(const char *path) {

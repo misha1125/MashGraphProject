@@ -39,8 +39,8 @@ public:
     void ApplyScale(glm::vec3 scale);
     void Show();
     void AddLight(glm::vec3 lightColor, glm::vec3 lightSource);
-    void ApplyLightParameters(glm::vec3 ambient = glm::vec3(0.2f, 0.2f, 0.2f), glm::vec3 diffuse = glm::vec3(0.2f, 0.2f, 0.2f),
-                              glm::vec3 specular = glm::vec3(0.2f, 0.2f, 0.2f), GLfloat shines = 32);
+    void ApplyLightParameters(glm::vec3 ambient = glm::vec3(0.4f, 0.4f, 0.4f), glm::vec3 diffuse = glm::vec3(0.4f, 0.4f, 0.4f),
+                              glm::vec3 specular = glm::vec3(0.2f, 0.2f, 0.2f), GLfloat shines = 8);
     void ApplyShader();
     void LoadSpectacularTexture(const char* path);
     void ApplySpectacularTexture();
