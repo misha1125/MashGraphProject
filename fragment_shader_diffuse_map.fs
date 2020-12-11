@@ -24,9 +24,9 @@ uniform vec3 lightColor;
 uniform vec3 lightPos;
 uniform vec3 viewPos;
 
+//Модель Блинна-Фонга
 void main()
 {
-
     vec3 ambient = material.ambient * lightColor * vec3(texture(ourTexture, TexCoord));
     vec3 norm = normalize(Normal);
     vec3 lightDir = normalize(lightPos - FragPos);
@@ -34,7 +34,8 @@ void main()
     vec3 diffuse = diff * lightColor * material.diffuse * vec3(texture(ourTexture, TexCoord));
     vec3 viewDir = normalize(viewPos - FragPos);
     vec3 reflectDir = reflect(-lightDir, norm);
-    float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
+    vec3 halfwayDir = normalize(lightDir + viewDir);
+    float spec = pow(max(dot(norm, halfwayDir), 0.0), material.shininess);
     vec3 specular = material.specular * spec * lightColor;
     float distance    = length(lightPos - FragPos);
         float attenuation = 1.0 / (material.constant + material.linear * distance +

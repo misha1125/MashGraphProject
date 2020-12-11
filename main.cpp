@@ -148,7 +148,6 @@ int main()
 
     MyShader skyboxShader("../vertex_shader_skybox.vs", "../fragment_shader_skybox.fs");
     Model skyBoxCube(skyboxShader, mainCamera, cube_vertices, sizeof(cube_vertices), 36, "", width, height, true);
-    skyBoxCube.ChangeTexture(cubeMap);
     glEnable(GL_DEPTH_TEST);
     glm::vec3 lightSource(0, 2, 0);
     glm::vec3 lightColor(1,1,1);
@@ -189,7 +188,7 @@ int main()
         nCube.ApplySpectacularTexture();
         nCube.ApplyNormalTexture();
         nCube.ApplyTransformation(glm::vec3(0,0,-2));
-        nCube.ApplyRotation(glm::normalize(glm::vec3(1.0, 0.0, 1.0)),(float)glfwGetTime() * -10.0f);
+        //nCube.ApplyRotation(glm::normalize(glm::vec3(1.0, 0.0, 1.0)),(float)glfwGetTime() * -10.0f);
         nCube.AddLight(lightColor, lightSource);
         nCube.ApplyLightParameters();
         nCube.Show();
