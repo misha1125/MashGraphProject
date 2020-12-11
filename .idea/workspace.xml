@@ -12,18 +12,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8ca22f17-463e-46b9-b1f7-84e598498f3c" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/brickwall_spec.jpg" afterPath="$PROJECT_DIR$/brickwall_spec.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/fragment_shader_skybox.fs" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vertex_shader_skybox.vs" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/mash_graph.dir/Model.cpp.obj" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/mash_graph.dir/Model.cpp.obj" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/mash_graph.dir/MyShader.cpp.obj" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/mash_graph.dir/MyShader.cpp.obj" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/mash_graph.dir/main.cpp.obj" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/mash_graph.dir/main.cpp.obj" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/mash_graph.dir/objects.a" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/mash_graph.dir/objects.a" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/mash_graph.exe" afterPath="$PROJECT_DIR$/cmake-build-debug/mash_graph.exe" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Model.cpp" afterPath="$PROJECT_DIR$/Model.cpp" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Model.h" afterPath="$PROJECT_DIR$/Model.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MyShader.cpp" afterPath="$PROJECT_DIR$/MyShader.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MyShader.h" afterPath="$PROJECT_DIR$/MyShader.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/mash_graph.dir/CXX.includecache" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/mash_graph.dir/CXX.includecache" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/mash_graph.dir/depend.internal" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/mash_graph.dir/depend.internal" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/mash_graph.dir/depend.make" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/mash_graph.dir/depend.make" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fragment_shader_diffuse_map.fs" afterPath="$PROJECT_DIR$/fragment_shader_diffuse_map.fs" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fragment_shader_spectral_and_normal_map.fs" afterPath="$PROJECT_DIR$/fragment_shader_spectral_and_normal_map.fs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fragment_shader_spectral_map.fs" afterPath="$PROJECT_DIR$/fragment_shader_spectral_map.fs" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.cpp" afterPath="$PROJECT_DIR$/main.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vertex_shader.vs" afterPath="$PROJECT_DIR$/vertex_shader.vs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vertex_shader_normal_map.vs" afterPath="$PROJECT_DIR$/vertex_shader_normal_map.vs" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -36,11 +44,11 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="main.cpp" pinned="false" current-in-tab="false">
+      <file leaf-file-name="main.cpp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="147">
-              <caret line="157" column="0" lean-forward="true" selection-start-line="157" selection-start-column="0" selection-end-line="157" selection-end-column="0" />
+            <state relative-caret-position="353">
+              <caret line="142" column="17" lean-forward="false" selection-start-line="142" selection-start-column="17" selection-end-line="142" selection-end-column="17" />
               <folding>
                 <element signature="e#40#57#0" expanded="true" />
               </folding>
@@ -51,18 +59,18 @@
       <file leaf-file-name="Model.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Model.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="190">
-              <caret line="45" column="32" lean-forward="true" selection-start-line="45" selection-start-column="32" selection-end-line="45" selection-end-column="32" />
+            <state relative-caret-position="132">
+              <caret line="91" column="22" lean-forward="false" selection-start-line="91" selection-start-column="22" selection-end-line="91" selection-end-column="22" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Model.h" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Model.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Model.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="606">
-              <caret line="41" column="124" lean-forward="false" selection-start-line="41" selection-start-column="124" selection-end-line="41" selection-end-column="124" />
+            <state relative-caret-position="421">
+              <caret line="48" column="42" lean-forward="true" selection-start-line="48" selection-start-column="4" selection-end-line="48" selection-end-column="42" />
               <folding>
                 <element signature="e#99#120#0" expanded="true" />
                 <element signature="e#162#179#0" expanded="true" />
@@ -71,51 +79,33 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="vertex_shader.vs" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/vertex_shader.vs">
+      <file leaf-file-name="vertex_shader_skybox.vs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/vertex_shader_skybox.vs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="22" column="26" lean-forward="false" selection-start-line="22" selection-start-column="26" selection-end-line="22" selection-end-column="26" />
+            <state relative-caret-position="255">
+              <caret line="15" column="52" lean-forward="false" selection-start-line="15" selection-start-column="52" selection-end-line="15" selection-end-column="52" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="fragment_shader_spectral_and_normal_map.fs" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/fragment_shader_spectral_and_normal_map.fs">
+      <file leaf-file-name="MyShader.cpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/MyShader.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="561">
-              <caret line="33" column="31" lean-forward="false" selection-start-line="33" selection-start-column="31" selection-end-line="33" selection-end-column="31" />
-              <folding />
+            <state relative-caret-position="438">
+              <caret line="112" column="6" lean-forward="false" selection-start-line="112" selection-start-column="6" selection-end-line="112" selection-end-column="6" />
+              <folding>
+                <element signature="e#43#60#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="fragment_shader_diffuse_map.fs" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/fragment_shader_diffuse_map.fs">
+      <file leaf-file-name="fragment_shader_skybox.fs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/fragment_shader_skybox.fs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="28" column="49" lean-forward="false" selection-start-line="28" selection-start-column="42" selection-end-line="28" selection-end-column="49" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="fragment_shader_spectral_map.fs" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/fragment_shader_spectral_map.fs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="421">
-              <caret line="31" column="20" lean-forward="false" selection-start-line="31" selection-start-column="20" selection-end-line="31" selection-end-column="20" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="vertex_shader_normal_map.vs" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/vertex_shader_normal_map.vs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="22" column="47" lean-forward="false" selection-start-line="22" selection-start-column="47" selection-end-line="22" selection-end-column="47" />
+            <state relative-caret-position="170">
+              <caret line="10" column="36" lean-forward="false" selection-start-line="10" selection-start-column="36" selection-end-line="10" selection-end-column="36" />
               <folding />
             </state>
           </provider>
@@ -139,18 +129,20 @@
         <option value="$PROJECT_DIR$/Camera.h" />
         <option value="$PROJECT_DIR$/fragment_shader_light_source.fs" />
         <option value="$PROJECT_DIR$/fragment_shader_light.fs" />
-        <option value="$PROJECT_DIR$/MyShader.h" />
-        <option value="$PROJECT_DIR$/MyShader.cpp" />
         <option value="$PROJECT_DIR$/CMakeLists.txt" />
         <option value="$PROJECT_DIR$/vertex_shader_narmal_map.vs" />
-        <option value="$PROJECT_DIR$/fragment_shader_spectral_map.fs" />
-        <option value="$PROJECT_DIR$/vertex_shader_normal_map.vs" />
-        <option value="$PROJECT_DIR$/fragment_shader_spectral_and_normal_map.fs" />
-        <option value="$PROJECT_DIR$/fragment_shader_diffuse_map.fs" />
-        <option value="$PROJECT_DIR$/Model.cpp" />
         <option value="$PROJECT_DIR$/vertex_shader.vs" />
-        <option value="$PROJECT_DIR$/main.cpp" />
+        <option value="$PROJECT_DIR$/vertex_shader_normal_map.vs" />
+        <option value="$PROJECT_DIR$/fragment_shader_diffuse_map.fs" />
+        <option value="$PROJECT_DIR$/fragment_shader_spectral_and_normal_map.fs" />
+        <option value="$PROJECT_DIR$/fragment_shader_spectral_map.fs" />
+        <option value="$PROJECT_DIR$/MyShader.h" />
         <option value="$PROJECT_DIR$/Model.h" />
+        <option value="$PROJECT_DIR$/Model.cpp" />
+        <option value="$PROJECT_DIR$/MyShader.cpp" />
+        <option value="$PROJECT_DIR$/fragment_shader_skybox.fs" />
+        <option value="$PROJECT_DIR$/vertex_shader_skybox.vs" />
+        <option value="$PROJECT_DIR$/main.cpp" />
       </list>
     </option>
   </component>
@@ -204,7 +196,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="libs" />
+              <option name="myItemId" value="skybox" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -455,12 +447,12 @@
       <workItem from="1607325713540" duration="2917000" />
       <workItem from="1607335907049" duration="4990000" />
       <workItem from="1607343590018" duration="4646000" />
-      <workItem from="1607503233933" duration="16515000" />
+      <workItem from="1607503233933" duration="19659000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="55685000" />
+    <option name="totallyTimeSpent" value="58829000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -512,69 +504,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/texture.jpg">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fragment_shader.fs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="41" lean-forward="false" selection-start-line="10" selection-start-column="41" selection-end-line="10" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vertex_shader.vs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="31" lean-forward="false" selection-start-line="15" selection-start-column="31" selection-end-line="15" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="17" column="0" lean-forward="true" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-          <folding>
-            <element signature="e#40#57#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-          <folding>
-            <element signature="e#40#57#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="38" lean-forward="false" selection-start-line="12" selection-start-column="38" selection-end-line="12" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fragment_shader.fs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="8" lean-forward="false" selection-start-line="6" selection-start-column="8" selection-end-line="6" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/vertex_shader.vs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
@@ -599,11 +528,7 @@
         <state relative-caret-position="969">
           <caret line="57" column="92" lean-forward="false" selection-start-line="57" selection-start-column="92" selection-end-line="57" selection-end-column="92" />
           <folding>
-            <marker date="1607541217823" expanded="true" signature="141:1150" ph="{...}" />
-            <marker date="1607541217823" expanded="true" signature="1221:1637" ph="{...}" />
-            <marker date="1607541217823" expanded="true" signature="1730:1889" ph="{...}" />
-            <marker date="1607541217823" expanded="true" signature="1946:2225" ph="{...}" />
-            <marker date="1607541217823" expanded="true" signature="2250:2286" ph="{...}" />
+            <element signature="e#43#60#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -630,6 +555,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
           <caret line="6" column="8" lean-forward="false" selection-start-line="6" selection-start-column="8" selection-end-line="6" selection-end-column="8" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -657,11 +583,7 @@
         <state relative-caret-position="816">
           <caret line="48" column="5" lean-forward="false" selection-start-line="48" selection-start-column="5" selection-end-line="48" selection-end-column="5" />
           <folding>
-            <marker date="1607541217823" expanded="true" signature="141:1150" ph="{...}" />
-            <marker date="1607541217823" expanded="true" signature="1221:1637" ph="{...}" />
-            <marker date="1607541217823" expanded="true" signature="1730:1889" ph="{...}" />
-            <marker date="1607541217823" expanded="true" signature="1946:2225" ph="{...}" />
-            <marker date="1607541217823" expanded="true" signature="2250:2286" ph="{...}" />
+            <element signature="e#43#60#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -774,13 +696,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/fragment_shader.fs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="40" lean-forward="true" selection-start-line="10" selection-start-column="40" selection-end-line="10" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Camera.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-140">
@@ -810,20 +725,6 @@
         <state relative-caret-position="102">
           <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/MyShader.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="489">
-          <caret line="88" column="0" lean-forward="false" selection-start-line="88" selection-start-column="0" selection-end-line="88" selection-end-column="0" />
-          <folding>
-            <marker date="1607541217823" expanded="true" signature="141:1150" ph="{...}" />
-            <marker date="1607541217823" expanded="true" signature="1221:1637" ph="{...}" />
-            <marker date="1607541217823" expanded="true" signature="1730:1889" ph="{...}" />
-            <marker date="1607541217823" expanded="true" signature="1946:2225" ph="{...}" />
-            <marker date="1607541217823" expanded="true" signature="2250:2286" ph="{...}" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -861,45 +762,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/MyShader.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="455">
-          <caret line="35" column="12" lean-forward="false" selection-start-line="35" selection-start-column="12" selection-end-line="35" selection-end-column="12" />
-          <folding>
-            <element signature="e#104#121#0" expanded="true" />
-            <element signature="e#225#255#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/vertex_shader_normal_map.vs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="22" column="47" lean-forward="false" selection-start-line="22" selection-start-column="47" selection-end-line="22" selection-end-column="47" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fragment_shader_spectral_map.fs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="421">
-          <caret line="31" column="20" lean-forward="false" selection-start-line="31" selection-start-column="20" selection-end-line="31" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fragment_shader_spectral_and_normal_map.fs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="561">
-          <caret line="33" column="31" lean-forward="false" selection-start-line="33" selection-start-column="31" selection-end-line="33" selection-end-column="31" />
+        <state relative-caret-position="391">
+          <caret line="23" column="26" lean-forward="false" selection-start-line="23" selection-start-column="26" selection-end-line="23" selection-end-column="26" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/fragment_shader_diffuse_map.fs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="28" column="49" lean-forward="false" selection-start-line="28" selection-start-column="42" selection-end-line="28" selection-end-column="49" />
+        <state relative-caret-position="455">
+          <caret line="43" column="28" lean-forward="false" selection-start-line="38" selection-start-column="4" selection-end-line="43" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fragment_shader_spectral_map.fs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="731">
+          <caret line="43" column="28" lean-forward="false" selection-start-line="41" selection-start-column="4" selection-end-line="43" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fragment_shader_spectral_and_normal_map.fs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-106">
+          <caret line="16" column="20" lean-forward="false" selection-start-line="14" selection-start-column="3" selection-end-line="16" selection-end-column="20" />
           <folding />
         </state>
       </provider>
@@ -912,31 +802,106 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.cpp">
+    <entry file="file://$PROJECT_DIR$/MyShader.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="147">
-          <caret line="157" column="0" lean-forward="true" selection-start-line="157" selection-start-column="0" selection-end-line="157" selection-end-column="0" />
+        <state relative-caret-position="472">
+          <caret line="36" column="44" lean-forward="true" selection-start-line="36" selection-start-column="44" selection-end-line="36" selection-end-column="44" />
           <folding>
-            <element signature="e#40#57#0" expanded="true" />
+            <element signature="e#104#121#0" expanded="true" />
+            <element signature="e#225#255#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Model.cpp">
+    <entry file="file://$PROJECT_DIR$/skybox/cave3_bk.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/skybox/cave3_ft.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/skybox/cave3_lf.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/skybox/cave3_rt.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/skybox/cave3_up.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fragment_shader.fs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="45" column="32" lean-forward="true" selection-start-line="45" selection-start-column="32" selection-end-line="45" selection-end-column="32" />
+        <state relative-caret-position="102">
+          <caret line="6" column="29" lean-forward="false" selection-start-line="6" selection-start-column="29" selection-end-line="6" selection-end-column="29" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Model.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="606">
-          <caret line="41" column="124" lean-forward="false" selection-start-line="41" selection-start-column="124" selection-end-line="41" selection-end-column="124" />
+        <state relative-caret-position="421">
+          <caret line="48" column="42" lean-forward="true" selection-start-line="48" selection-start-column="4" selection-end-line="48" selection-end-column="42" />
           <folding>
             <element signature="e#99#120#0" expanded="true" />
             <element signature="e#162#179#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Model.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="132">
+          <caret line="91" column="22" lean-forward="false" selection-start-line="91" selection-start-column="22" selection-end-line="91" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MyShader.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="438">
+          <caret line="112" column="6" lean-forward="false" selection-start-line="112" selection-start-column="6" selection-end-line="112" selection-end-column="6" />
+          <folding>
+            <element signature="e#43#60#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fragment_shader_skybox.fs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="36" lean-forward="false" selection-start-line="10" selection-start-column="36" selection-end-line="10" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vertex_shader_skybox.vs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" column="52" lean-forward="false" selection-start-line="15" selection-start-column="52" selection-end-line="15" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/skybox/cave3_dn.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="353">
+          <caret line="142" column="17" lean-forward="false" selection-start-line="142" selection-start-column="17" selection-end-line="142" selection-end-column="17" />
+          <folding>
+            <element signature="e#40#57#0" expanded="true" />
           </folding>
         </state>
       </provider>

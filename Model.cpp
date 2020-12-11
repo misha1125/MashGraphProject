@@ -143,3 +143,7 @@ void Model::LoadTexture(const char *path, GLuint &texture) {
     std::cout<<"Loaded sucsessfully "<< texture<<"\n";
 }
 
+void Model::ChangeTexture(GLuint newTexture){
+    texture = newTexture;
+}
+

@@ -425,6 +425,7 @@ CMakeFiles/mash_graph.dir/Model.cpp.obj
  C:/Learning/mash_graph/libs/include/glew.h
  C:/Learning/mash_graph/libs/include/glfw3.h
 CMakeFiles/mash_graph.dir/MyShader.cpp.obj
+ ../libs/include/SOIL.h
  ../libs/include/glm/./detail/_swizzle.hpp
  ../libs/include/glm/./detail/_swizzle_func.hpp
  ../libs/include/glm/./detail/compute_vector_relational.hpp

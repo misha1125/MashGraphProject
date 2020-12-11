@@ -2,6 +2,7 @@
 // Created by михаил on 07.12.2020.
 //
 
+#include <SOIL.h>
 #include "MyShader.h"
 
 
@@ -90,4 +91,25 @@ void MyShader::SetFloat(const char *name, GLfloat val) {
 void MyShader::SetInt(const char *name, GLint val) {
     GLint viewPosLoc = glGetUniformLocation(Program, name);
     glUniform1i(viewPosLoc, val);
+}
+
+GLuint MyShader::loadCubemap(const char ** paths) {
+    unsigned int textureID;
+    glGenTextures(1, &textureID);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
+    for (unsigned int i = 0; i < 6; i++)
+    {
+        int width_im, height_im;
+        unsigned char* data = SOIL_load_image(paths[i], &width_im, &height_im, 0, SOIL_LOAD_RGB);
+        glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,0, GL_RGB,
+                     width_im, height_im, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+        SOIL_free_image_data(data);
+    }
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+    //glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
+    return textureID;
 }

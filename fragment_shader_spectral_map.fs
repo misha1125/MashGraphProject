@@ -11,6 +11,10 @@ struct Material {
     vec3 diffuse;
     float shininess;
     sampler2D specularTex;
+
+    float constant;
+    float linear;
+    float quadratic;
 };
 
 uniform Material material;
@@ -31,6 +35,13 @@ void main()
     vec3 reflectDir = reflect(-lightDir, norm);
     float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
     vec3 specular = spec * lightColor * vec3(texture(material.specularTex, TexCoord));
+
+    float distance    = length(lightPos - FragPos);
+            float attenuation = 1.0 / (material.constant + material.linear * distance +
+            		    material.quadratic * (distance * distance));
+    ambient  *= attenuation;
+    diffuse  *= attenuation;
+    specular *= attenuation;
 
     color = vec4(ambient + diffuse + specular,1.0f);
 }

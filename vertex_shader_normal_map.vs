@@ -21,5 +21,5 @@ void main()
     ourColor = color;
     TexCoord = texCoord;
     normalChange = mat3(transpose(inverse(model)));
-    FragPos = vec3(model * vec4(position, 1.0f));
+    FragPos = vec3(view * model * vec4(position, 1.0f));
 }

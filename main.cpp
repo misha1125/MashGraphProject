@@ -129,7 +129,6 @@ int main()
     Model sCube(spectacularShader, mainCamera, cube_vertices, sizeof(cube_vertices), 36, "../box.png", width, height, true);
     sCube.LoadSpectacularTexture("../spec_box.png");
 
-    //На самом деле все сложнее,нужно так же добавить тангенсальное пространство.
     MyShader normalAndSpectacularShader("../vertex_shader_normal_map.vs", "../fragment_shader_spectral_and_normal_map.fs");
     Model nCube(normalAndSpectacularShader, mainCamera, cube_vertices, sizeof(cube_vertices), 36, "../brickwall.jpg", width, height, true);
     nCube.LoadSpectacularTexture("../brickwall_spec.jpg");
@@ -138,8 +137,20 @@ int main()
     MyShader shader("../vertex_shader.vs", "../fragment_shader_light_source.fs");
     Model lightCube(shader, mainCamera, cube_vertices, sizeof(cube_vertices), 36, "../light.png", width, height, true);
 
+    const char *cubeMapPath[6];
+    cubeMapPath[1] = "../skybox/cave3_bk.png";
+    cubeMapPath[3] = "../skybox/cave3_dn.png";//correct
+    cubeMapPath[0] = "../skybox/cave3_ft.png";
+    cubeMapPath[5] = "../skybox/cave3_lf.png";
+    cubeMapPath[4] = "../skybox/cave3_rt.png";
+    cubeMapPath[2] = "../skybox/cave3_up.png";//correct
+    auto cubeMap = MyShader::loadCubemap(cubeMapPath);
+
+    MyShader skyboxShader("../vertex_shader_skybox.vs", "../fragment_shader_skybox.fs");
+    Model skyBoxCube(skyboxShader, mainCamera, cube_vertices, sizeof(cube_vertices), 36, "", width, height, true);
+    skyBoxCube.ChangeTexture(cubeMap);
     glEnable(GL_DEPTH_TEST);
-    glm::vec3 lightSource(0, -1, 0);
+    glm::vec3 lightSource(0, 2, 0);
     glm::vec3 lightColor(1,1,1);
     while(!glfwWindowShouldClose(window))
     {
@@ -150,6 +161,14 @@ int main()
         //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
         //lightColor = glm::vec3(0.5f*sin(glfwGetTime()*0.2),0.5f*sin(glfwGetTime()*0.1),0.5f*sin(glfwGetTime()*0.5));
+
+        glDepthMask(GL_FALSE);
+        skyBoxCube.ApplyShader();
+        glBindTexture(GL_TEXTURE_CUBE_MAP, cubeMap);
+        skyBoxCube.ApplyTransformation(glm::vec3(0,0,0));
+        skyBoxCube.ApplyScale(glm::vec3(100,100,100));
+        skyBoxCube.Show();
+        glDepthMask(GL_TRUE);
 
         lightCube.ApplyShader();
         lightCube.AddLight(lightColor, lightSource);

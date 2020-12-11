@@ -26,9 +26,7 @@ uniform vec3 viewPos;
 
 void main()
 {
-    float distance    = length(lightPos - FragPos);
-    float attenuation = 1.0 / (material.constant + material.linear * distance +
-    		    material.quadratic * (distance * distance));
+
     vec3 ambient = material.ambient * lightColor * vec3(texture(ourTexture, TexCoord));
     vec3 norm = normalize(Normal);
     vec3 lightDir = normalize(lightPos - FragPos);
@@ -38,6 +36,9 @@ void main()
     vec3 reflectDir = reflect(-lightDir, norm);
     float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
     vec3 specular = material.specular * spec * lightColor;
+    float distance    = length(lightPos - FragPos);
+        float attenuation = 1.0 / (material.constant + material.linear * distance +
+        		    material.quadratic * (distance * distance));
     ambient  *= attenuation;
     diffuse  *= attenuation;
     specular *= attenuation;
