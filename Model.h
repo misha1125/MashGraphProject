@@ -47,6 +47,7 @@ public:
     void LoadNormalTexture(const char* path);
     void ApplyNormalTexture();
     void ChangeTexture(GLuint newTexture);
+    void IgnoreCamPosition();
 };
 
 

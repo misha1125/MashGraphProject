@@ -13,6 +13,6 @@ uniform mat4 cameraView;
 
 void main()
 {
-    gl_Position = projection * cameraView * view *model* vec4(position, 1.0f);
+    gl_Position = projection * cameraView * vec4(position, 1.0f);
     TexCoord = position;
 }

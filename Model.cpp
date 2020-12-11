@@ -58,7 +58,6 @@ void Model::ApplyTransformation(glm::vec3 position) {
 
 
 void Model::Show() {
-
     glBindVertexArray(vertex_array);
     glDrawArrays(GL_TRIANGLES, 0, vertex_cnt);
     glBindVertexArray(0);
@@ -145,5 +144,11 @@ void Model::LoadTexture(const char *path, GLuint &texture) {
 
 void Model::ChangeTexture(GLuint newTexture){
     texture = newTexture;
+}
+
+void Model::IgnoreCamPosition(){
+    glm::mat4 view = glm::mat4(glm::mat3(camera.CameraView()));
+    GLint camLoc = glGetUniformLocation(shader.Program, "cameraView");
+    glUniformMatrix4fv(camLoc, 1, GL_FALSE, glm::value_ptr(view));
 }
 
