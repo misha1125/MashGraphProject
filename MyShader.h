@@ -34,6 +34,7 @@ public:
     void SetVector3(const char * name, glm::vec3 vec);
     void SetFloat(const char * name, GLfloat val);
     void SetInt(const char * name, GLint val);
+    void SetBool(const char * name, GLboolean val);
     static GLuint loadCubemap(const char ** paths);
 };
 

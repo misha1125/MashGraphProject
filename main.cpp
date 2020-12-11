@@ -18,6 +18,7 @@
 
 GLuint vertex_buffer, vertex_array, index_buffer;
 Camera mainCamera;
+GLboolean enable_gama_correction = true;
 void mouse_callback(GLFWwindow *window, double xpos, double ypos) {
     mainCamera.mouse_callback(window,xpos,ypos);
 }
@@ -27,6 +28,10 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
     if(key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
         glfwSetWindowShouldClose(window, GL_TRUE);
    mainCamera.key_callback(window,key,scancode,action,mode);
+    if(key == GLFW_KEY_T && action == GLFW_PRESS)
+        enable_gama_correction = false;
+    if(key == GLFW_KEY_Y && action == GLFW_PRESS)
+        enable_gama_correction = true;
 }
 
 
@@ -158,9 +163,6 @@ int main()
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         //wireframe для отладки
         //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
-        //lightColor = glm::vec3(0.5f*sin(glfwGetTime()*0.2),0.5f*sin(glfwGetTime()*0.1),0.5f*sin(glfwGetTime()*0.5));
-
         glDepthMask(GL_FALSE);
         skyBoxCube.ApplyShader();
         glBindTexture(GL_TEXTURE_CUBE_MAP, cubeMap);
@@ -174,15 +176,12 @@ int main()
         lightCube.ApplyTransformation(lightSource);
         lightCube.Show();
 
-
-
         sCube.ApplyShader();
         sCube.ApplySpectacularTexture();
         sCube.ApplyTransformation(glm::vec3(0,0,-6));
         sCube.AddLight(lightColor, lightSource);
         sCube.ApplyLightParameters();
         sCube.Show();
-
 
         nCube.ApplyShader();
         nCube.ApplySpectacularTexture();
@@ -192,7 +191,6 @@ int main()
         nCube.AddLight(lightColor, lightSource);
         nCube.ApplyLightParameters();
         nCube.Show();
-
 
         cube.ApplyShader();
         cube.ApplyTransformation(glm::vec3(-1,-1,-6));
@@ -215,14 +213,17 @@ int main()
         //plane.ApplyLightParameters(glm::vec3(1,0.5f,0.31f), glm::vec3(1,0.5f,0.31f), glm::vec3(0.6,0.6,0.6),64);
         plane.Show();
 
+        shader.Apply();
+        shader.SetBool("enableGama",enable_gama_correction);
+        lightedShader.Apply();
+        lightedShader.SetBool("enableGama",enable_gama_correction);
+        spectacularShader.Apply();
+        spectacularShader.SetBool("enableGama",enable_gama_correction);
+        normalAndSpectacularShader.Apply();
+        normalAndSpectacularShader.SetBool("enableGama",enable_gama_correction);
 
         glfwSwapBuffers(window);
     }
-    // Properly de-allocate all resources once they've outlived their purpose
-    glDeleteVertexArrays(1, &vertex_array);
-    glDeleteBuffers(1, &vertex_buffer);
-    glDeleteBuffers(1, &index_buffer);
-
     glfwTerminate();
     return 0;
 }

@@ -100,9 +100,9 @@ void Model::ApplyLightParameters(glm::vec3 ambient, glm::vec3 diffuse, glm::vec3
     shader.SetVector3("material.specular", specular);
     shader.SetFloat("material.shininess", shines);
 
-    shader.SetFloat("material.constant",  0.2f);
-    shader.SetFloat("material.linear",    0.07f);
-    shader.SetFloat("material.quadratic", 0.017f);
+    shader.SetFloat("material.constant",  0.4f);
+    shader.SetFloat("material.linear",    0.03f);
+    shader.SetFloat("material.quadratic", 0.003f);
 }
 
 void Model::LoadSpectacularTexture(const char *path) {
@@ -134,7 +134,7 @@ void Model::LoadTexture(const char *path, GLuint &texture) {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     int width_im, height_im;
     unsigned char* image = SOIL_load_image(path, &width_im, &height_im, 0, SOIL_LOAD_RGB);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width_im, height_im, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_SRGB, width_im, height_im, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
     glGenerateMipmap(GL_TEXTURE_2D);
     SOIL_free_image_data(image);
     glBindTexture(GL_TEXTURE_2D, 0);

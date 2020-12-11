@@ -113,3 +113,8 @@ GLuint MyShader::loadCubemap(const char ** paths) {
     //glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
     return textureID;
 }
+
+void MyShader::SetBool(const char *name, GLboolean val) {
+    GLint viewPosLoc = glGetUniformLocation(Program, name);
+    glUniform1i(viewPosLoc, val);
+}
