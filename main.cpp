@@ -19,6 +19,7 @@
 GLuint vertex_buffer, vertex_array, index_buffer;
 Camera mainCamera;
 GLboolean enable_gama_correction = true;
+GLboolean enable_post_effect = false;
 void mouse_callback(GLFWwindow *window, double xpos, double ypos) {
     mainCamera.mouse_callback(window,xpos,ypos);
 }
@@ -29,9 +30,9 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
         glfwSetWindowShouldClose(window, GL_TRUE);
    mainCamera.key_callback(window,key,scancode,action,mode);
     if(key == GLFW_KEY_T && action == GLFW_PRESS)
-        enable_gama_correction = false;
-    if(key == GLFW_KEY_Y && action == GLFW_PRESS)
-        enable_gama_correction = true;
+        enable_gama_correction = !enable_gama_correction;
+    if(key == GLFW_KEY_Z && action == GLFW_PRESS)
+        enable_post_effect = !enable_post_effect;
 }
 
 
@@ -91,6 +92,46 @@ GLfloat plane_vertices[] = {
         -0.5f, 0, -0.5f,  0.0f, 1.0f,0.0f,  1.0f,  0.0f,
 };
 
+GLuint ConfiguratePostEffect( int width,int height,GLuint &frameBuffer, GLuint  &textureColorBuffer){
+    glGenFramebuffers(1, &frameBuffer);
+    glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
+
+    glGenTextures(1, &textureColorBuffer);
+    glBindTexture(GL_TEXTURE_2D, textureColorBuffer);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureColorBuffer, 0);
+    GLuint rbo;
+    glGenRenderbuffers(1, &rbo);
+    glBindRenderbuffer(GL_RENDERBUFFER, rbo);
+    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, width, height);
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo);
+
+    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+        std::cout << "ERROR::FRAMEBUFFER:: Framebuffer is not complete!" << std::endl;
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    GLfloat screenVertexes[] = {
+            -1.0f,  1.0f,  0.0f, 1.0f,
+            -1.0f, -1.0f,  0.0f, 0.0f,
+            1.0f, -1.0f,  1.0f, 0.0f,
+
+            -1.0f,  1.0f,  0.0f, 1.0f,
+            1.0f, -1.0f,  1.0f, 0.0f,
+            1.0f,  1.0f,  1.0f, 1.0f
+    };
+    GLuint screen_array, screenVBO;
+    glGenVertexArrays(1, &screen_array);
+    glGenBuffers(1, &screenVBO);
+    glBindVertexArray(screen_array);
+    glBindBuffer(GL_ARRAY_BUFFER, screenVBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(screenVertexes), &screenVertexes, GL_STATIC_DRAW);
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
+    return screen_array;
+}
 
 int main()
 {
@@ -142,6 +183,8 @@ int main()
     MyShader shader("../vertex_shader.vs", "../fragment_shader_light_source.fs");
     Model lightCube(shader, mainCamera, cube_vertices, sizeof(cube_vertices), 36, "../light.png", width, height, true);
 
+    MyShader screenShader("../vertex_shader_post_effect.vs","../fragment_shader_post_effect.fs" );
+
     const char *cubeMapPath[6];
     cubeMapPath[1] = "../skybox/hot_bk.png";
     cubeMapPath[3] = "../skybox/hot_dn.png";//correct
@@ -156,13 +199,20 @@ int main()
     glEnable(GL_DEPTH_TEST);
     glm::vec3 lightSource(0, 2, 0);
     glm::vec3 lightColor(1,1,1);
+    GLuint  frameBufer, screenImage;
+    auto quadVAO = ConfiguratePostEffect(width,height,frameBufer, screenImage);
     while(!glfwWindowShouldClose(window))
     {
         glfwPollEvents();
+
+        glBindFramebuffer(GL_FRAMEBUFFER, frameBufer);
+        glEnable(GL_DEPTH_TEST);
+
         glClearColor(0.2, 0.3, 0.35, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         //wireframe для отладки
         //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
         glDepthMask(GL_FALSE);
         skyBoxCube.ApplyShader();
         glBindTexture(GL_TEXTURE_CUBE_MAP, cubeMap);
@@ -213,6 +263,7 @@ int main()
         //plane.ApplyLightParameters(glm::vec3(1,0.5f,0.31f), glm::vec3(1,0.5f,0.31f), glm::vec3(0.6,0.6,0.6),64);
         plane.Show();
 
+
         shader.Apply();
         shader.SetBool("enableGama",enable_gama_correction);
         lightedShader.Apply();
@@ -221,6 +272,19 @@ int main()
         spectacularShader.SetBool("enableGama",enable_gama_correction);
         normalAndSpectacularShader.Apply();
         normalAndSpectacularShader.SetBool("enableGama",enable_gama_correction);
+
+
+        // теперь снова привязывемся к фреймбуферу, заданному по умолчанию и отрисовываем прямоугольник с прикрепленной цветовой текстурой фреймбуфера
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        glDisable(GL_DEPTH_TEST);
+        glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT);
+
+        screenShader.Apply();
+        screenShader.SetBool("enablePostEffect", enable_post_effect);
+        glBindVertexArray(quadVAO);
+        glBindTexture(GL_TEXTURE_2D, screenImage);
+        glDrawArrays(GL_TRIANGLES, 0, 6);
 
         glfwSwapBuffers(window);
     }
