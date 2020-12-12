@@ -175,10 +175,8 @@ int main()
     Model sCube(spectacularShader, mainCamera, cube_vertices, sizeof(cube_vertices), 36, "../box.png", width, height, true);
     sCube.LoadSpectacularTexture("../spec_box.png");
 
-    MyShader normalAndSpectacularShader("../vertex_shader_normal_map.vs", "../fragment_shader_spectral_and_normal_map.fs");
-    Model nCube(normalAndSpectacularShader, mainCamera, cube_vertices, sizeof(cube_vertices), 36, "../brickwall.jpg", width, height, true);
-    nCube.LoadSpectacularTexture("../brickwall_spec.jpg");
-    nCube.LoadNormalTexture("../brickwall_normal.jpg");
+
+
 
     MyShader shader("../vertex_shader.vs", "../fragment_shader_light_source.fs");
     Model lightCube(shader, mainCamera, cube_vertices, sizeof(cube_vertices), 36, "../light.png", width, height, true);
@@ -196,6 +194,15 @@ int main()
 
     MyShader skyboxShader("../vertex_shader_skybox.vs", "../fragment_shader_skybox.fs");
     Model skyBoxCube(skyboxShader, mainCamera, cube_vertices, sizeof(cube_vertices), 36, "", width, height, true);
+
+    MyShader paralaxShader("../vertex_shader_paralax.vs", "../fragment_shader_paralax.fs");
+    auto paralaxPlane = Model::GeneratePlaneForParalax(paralaxShader, mainCamera, "../paralax/bricks2.jpg", width, height);
+    paralaxPlane.LoadNormalTexture("../paralax/bricks2_normal.jpg");
+    paralaxPlane.LoadDephTexture("../paralax/bricks2_disp.jpg");
+
+    Model nPlane = Model::GeneratePlaneForParalax(paralaxShader, mainCamera, "../brickwall.jpg", width, height);
+    nPlane.LoadNormalTexture("../brickwall_normal.jpg");
+
     glEnable(GL_DEPTH_TEST);
     glm::vec3 lightSource(0, 2, 0);
     glm::vec3 lightColor(1,1,1);
@@ -233,14 +240,18 @@ int main()
         sCube.ApplyLightParameters();
         sCube.Show();
 
-        nCube.ApplyShader();
-        nCube.ApplySpectacularTexture();
-        nCube.ApplyNormalTexture();
-        nCube.ApplyTransformation(glm::vec3(0,0,-2));
-        //nCube.ApplyRotation(glm::normalize(glm::vec3(1.0, 0.0, 1.0)),(float)glfwGetTime() * -10.0f);
-        nCube.AddLight(lightColor, lightSource);
-        nCube.ApplyLightParameters();
-        nCube.Show();
+
+
+        nPlane.ApplyShader();
+        nPlane.ApplyNormalTexture();
+        nPlane.ApplyTransformation(glm::vec3(0,0,-2));
+        paralaxShader.SetFloat("heightScale",0);
+        //nCube.ApplyRotation(glm::normalize,90.0f(glm::vec3(1.0, 0.0, 1.0)),(float)glfwGetTime() * -10.0f);
+        nPlane.AddLight(lightColor, lightSource);
+        nPlane.ApplyLightParameters();
+        nPlane.Show();
+
+
 
         cube.ApplyShader();
         cube.ApplyTransformation(glm::vec3(-1,-1,-6));
@@ -256,13 +267,26 @@ int main()
         cube.ApplyLightParameters();
         cube.Show();
 
+
+
         plane.ApplyShader();
         plane.ApplyTransformation(glm::vec3(1,-3,-6));
         plane.ApplyScale(glm::vec3(10,1,10));
         plane.AddLight(lightColor,lightSource);
+        plane.ApplyLightParameters();
         //plane.ApplyLightParameters(glm::vec3(1,0.5f,0.31f), glm::vec3(1,0.5f,0.31f), glm::vec3(0.6,0.6,0.6),64);
         plane.Show();
 
+
+        paralaxPlane.ApplyShader();
+        paralaxShader.SetFloat("heightScale",0.2f);
+        paralaxPlane.ApplyNormalTexture();
+        paralaxPlane.ApplyDephTexture();
+        paralaxPlane.ApplyTransformation(glm::vec3(2,0,-4));
+        paralaxPlane.ApplyRotation(glm::vec3(0,0,1),(GLfloat)glfwGetTime()*10.0f);
+        paralaxPlane.AddLight(lightColor,lightSource);
+        paralaxPlane.ApplyLightParameters();
+        paralaxPlane.Show();
 
         shader.Apply();
         shader.SetBool("enableGama",enable_gama_correction);
@@ -270,22 +294,21 @@ int main()
         lightedShader.SetBool("enableGama",enable_gama_correction);
         spectacularShader.Apply();
         spectacularShader.SetBool("enableGama",enable_gama_correction);
-        normalAndSpectacularShader.Apply();
-        normalAndSpectacularShader.SetBool("enableGama",enable_gama_correction);
+        paralaxShader.Apply();
+        paralaxShader.SetBool("enableGama",enable_gama_correction);
 
 
-        // теперь снова привязывемся к фреймбуферу, заданному по умолчанию и отрисовываем прямоугольник с прикрепленной цветовой текстурой фреймбуфера
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
         glDisable(GL_DEPTH_TEST);
-        glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
         screenShader.Apply();
         screenShader.SetBool("enablePostEffect", enable_post_effect);
         glBindVertexArray(quadVAO);
+        glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, screenImage);
         glDrawArrays(GL_TRIANGLES, 0, 6);
-
+        glBindVertexArray(0);
         glfwSwapBuffers(window);
     }
     glfwTerminate();

@@ -1,3 +1,5 @@
+//не используется, так как соответствующая функциональнасть реализована в шейдере для паралакса
+
 #version 330 core
 layout (location = 0) in vec3 position;
 layout (location = 1) in vec3 color;

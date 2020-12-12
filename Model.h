@@ -18,8 +18,6 @@
 #include <glm/gtc/type_ptr.hpp>
 
 class Model {
-
-
     MyShader &shader;
     Camera &camera;
     GLfloat *vertex;
@@ -27,10 +25,14 @@ class Model {
     GLuint texture;
     GLuint spectecularTexture;
     GLuint normalTexture;
+    GLuint dephMap;
     GLuint vertex_buffer, vertex_array;
     GLfloat width, height;
     glm::mat4 model;
     void LoadTexture(const char *path, GLuint &texture);
+    Model() = default;
+    Model(MyShader &shader, Camera &camera, const char *image_path,
+                 GLfloat width, GLfloat height);
 public:
     Model(MyShader &shader, Camera &camera,  GLfloat *vertex,size_t vertex_size, size_t vertex_cnt, const char *image_path,
           GLfloat width, GLfloat height, bool has_normal);
@@ -46,8 +48,14 @@ public:
     void ApplySpectacularTexture();
     void LoadNormalTexture(const char* path);
     void ApplyNormalTexture();
+
+    void LoadDephTexture(const char* path);
+    void ApplyDephTexture();
+
     void ChangeTexture(GLuint newTexture);
     void IgnoreCamPosition();
+
+    static Model GeneratePlaneForParalax(MyShader &shader, Camera &camera, const char *path,GLfloat width, GLfloat height);
 };
 
 
