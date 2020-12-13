@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.7)
 project(mash_graph)
 
 set(CMAKE_CXX_STANDARD 14)
-
+set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static-libstdc++ -static-libgcc")
 set(SOURCE_FILES main.cpp MyShader.cpp MyShader.h Model.cpp Model.h Camera.cpp Camera.h)
 
 find_package(OpenGL REQUIRED)
