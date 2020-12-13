@@ -48,18 +48,30 @@ vec2 ParallaxMapping(vec2 texCoord, vec3 viewDir)
         currentDepthMapVal = getColor(currentTexCoord);
         currentLayerDepth += layerDepth;
     }
-    float becomeDepth  = currentDepthMapVal - currentLayerDepth;
-    float wasDepth =  getColor(currentTexCoord + deltaTexCoord) - currentLayerDepth + layerDepth;
-    vec2 finalTexCoord = mix(currentTexCoord,(currentTexCoord + deltaTexCoord) , becomeDepth / (becomeDepth - wasDepth));
-    return finalTexCoord;
+    deltaTexCoord /= 2.0f;
+    currentTexCoord += deltaTexCoord;
+    currentLayerDepth -= currentDepthMapVal/2;
+    int currentStep = 5;
+    while (currentStep-- > 0) {
+        currentDepthMapVal = getColor(currentTexCoord);
+        deltaTexCoord /= 2.0f;
+        if (currentDepthMapVal / 2 > currentLayerDepth) {
+            currentTexCoord -= deltaTexCoord;
+            currentLayerDepth += layerDepth;
+        } else {
+            currentTexCoord += deltaTexCoord;
+            currentLayerDepth -= layerDepth;
+        }
+    }
+    return currentTexCoord;
 }
 
 
 //Модель Блинна-Фонга
 void main()
 {
-  vec3 viewDir = normalize(TangentViewPos - TangentFragPos);
-  vec2 texCoord = TexCoord;
+    vec3 viewDir = normalize(TangentViewPos - TangentFragPos);
+    vec2 texCoord = TexCoord;
 
     texCoord = ParallaxMapping(TexCoord,  viewDir);
     if(texCoord.x > 1.0 || texCoord.y > 1.0 || texCoord.x < 0.0 || texCoord.y < 0.0){

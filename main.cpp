@@ -204,7 +204,7 @@ int main()
     Model alfaPlane(alphaShader, mainCamera, plane_vertices, sizeof(plane_vertices), 6, "../transparent.png", width, height, true);
 
     glEnable(GL_DEPTH_TEST);
-    glm::vec3 lightSource(0, 2, 0);
+    glm::vec3 lightSource(0, 2,0);
     glm::vec3 lightColor(1,1,1);
     GLuint  frameBufer, screenImage;
     auto quadVAO = ConfiguratePostEffect(width,height,frameBufer, screenImage);
@@ -279,7 +279,7 @@ int main()
         paralaxPlane.ApplyNormalTexture();
         paralaxPlane.ApplyDephTexture();
         paralaxPlane.ApplyTransformation(glm::vec3(2,0,-4));
-        paralaxPlane.ApplyRotation(glm::vec3(0,0,1),(GLfloat)glfwGetTime()*10.0f);
+        //paralaxPlane.ApplyRotation(glm::vec3(0,0,1),(GLfloat)glfwGetTime()*10.0f);
         paralaxPlane.AddLight(lightColor,lightSource);
         paralaxPlane.ApplyLightParameters();
         paralaxPlane.Show();
