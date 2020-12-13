@@ -175,9 +175,6 @@ int main()
     Model sCube(spectacularShader, mainCamera, cube_vertices, sizeof(cube_vertices), 36, "../box.png", width, height, true);
     sCube.LoadSpectacularTexture("../spec_box.png");
 
-
-
-
     MyShader shader("../vertex_shader.vs", "../fragment_shader_light_source.fs");
     Model lightCube(shader, mainCamera, cube_vertices, sizeof(cube_vertices), 36, "../light.png", width, height, true);
 
@@ -203,17 +200,23 @@ int main()
     Model nPlane = Model::GeneratePlaneForParalax(paralaxShader, mainCamera, "../brickwall.jpg", width, height);
     nPlane.LoadNormalTexture("../brickwall_normal.jpg");
 
+    MyShader alphaShader("../vertex_shader.vs", "../fragment_shader.fs");
+    Model alfaPlane(alphaShader, mainCamera, plane_vertices, sizeof(plane_vertices), 6, "../transparent.png", width, height, true);
+
     glEnable(GL_DEPTH_TEST);
     glm::vec3 lightSource(0, 2, 0);
     glm::vec3 lightColor(1,1,1);
     GLuint  frameBufer, screenImage;
     auto quadVAO = ConfiguratePostEffect(width,height,frameBufer, screenImage);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     while(!glfwWindowShouldClose(window))
     {
         glfwPollEvents();
 
         glBindFramebuffer(GL_FRAMEBUFFER, frameBufer);
         glEnable(GL_DEPTH_TEST);
+
 
         glClearColor(0.2, 0.3, 0.35, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -240,8 +243,6 @@ int main()
         sCube.ApplyLightParameters();
         sCube.Show();
 
-
-
         nPlane.ApplyShader();
         nPlane.ApplyNormalTexture();
         nPlane.ApplyTransformation(glm::vec3(0,0,-2));
@@ -250,8 +251,6 @@ int main()
         nPlane.AddLight(lightColor, lightSource);
         nPlane.ApplyLightParameters();
         nPlane.Show();
-
-
 
         cube.ApplyShader();
         cube.ApplyTransformation(glm::vec3(-1,-1,-6));
@@ -267,8 +266,6 @@ int main()
         cube.ApplyLightParameters();
         cube.Show();
 
-
-
         plane.ApplyShader();
         plane.ApplyTransformation(glm::vec3(1,-3,-6));
         plane.ApplyScale(glm::vec3(10,1,10));
@@ -276,7 +273,6 @@ int main()
         plane.ApplyLightParameters();
         //plane.ApplyLightParameters(glm::vec3(1,0.5f,0.31f), glm::vec3(1,0.5f,0.31f), glm::vec3(0.6,0.6,0.6),64);
         plane.Show();
-
 
         paralaxPlane.ApplyShader();
         paralaxShader.SetFloat("heightScale",0.2f);
@@ -288,6 +284,25 @@ int main()
         paralaxPlane.ApplyLightParameters();
         paralaxPlane.Show();
 
+
+        glm::vec3 first_pos(-1,1,-3),second_pos(-1,1,-4);
+        if (glm::length(mainCamera.cameraPos-first_pos) <glm::length(mainCamera.cameraPos-second_pos)){
+            std::swap(first_pos,second_pos);
+        }
+        alfaPlane.ApplyShader();
+        alfaPlane.ApplyTransformation(first_pos);
+        alfaPlane.ApplyRotation(glm::vec3(1,0,0),90);
+        alfaPlane.AddLight(lightColor,lightSource);
+        alfaPlane.ApplyLightParameters();
+        alfaPlane.Show();
+
+        alfaPlane.ApplyShader();
+        alfaPlane.ApplyTransformation(second_pos);
+        alfaPlane.ApplyRotation(glm::vec3(1,0,0),90);
+        alfaPlane.AddLight(lightColor,lightSource);
+        alfaPlane.ApplyLightParameters();
+        alfaPlane.Show();
+
         shader.Apply();
         shader.SetBool("enableGama",enable_gama_correction);
         lightedShader.Apply();
@@ -296,7 +311,6 @@ int main()
         spectacularShader.SetBool("enableGama",enable_gama_correction);
         paralaxShader.Apply();
         paralaxShader.SetBool("enableGama",enable_gama_correction);
-
 
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
         glDisable(GL_DEPTH_TEST);

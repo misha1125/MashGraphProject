@@ -146,8 +146,8 @@ void Model::LoadTexture(const char *path, GLuint &texture) {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     int width_im, height_im;
-    unsigned char* image = SOIL_load_image(path, &width_im, &height_im, 0, SOIL_LOAD_RGB);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_SRGB, width_im, height_im, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
+    unsigned char* image = SOIL_load_image(path, &width_im, &height_im, 0, SOIL_LOAD_RGBA);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_SRGB_ALPHA, width_im, height_im, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
     glGenerateMipmap(GL_TEXTURE_2D);
     SOIL_free_image_data(image);
     glBindTexture(GL_TEXTURE_2D, 0);
@@ -229,29 +229,23 @@ Model Model::GeneratePlaneForParalax(MyShader &shader, Camera &camera, const cha
     result.vertex = planeVertices;
     result.vertex_size = sizeof(planeVertices);
     result.vertex_cnt = 6;
-    GLuint VAO,VBO;
-    glGenVertexArrays(1, &VAO);
-    glGenBuffers(1, &VBO);
-    glBindVertexArray(VAO);
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+
+    glGenVertexArrays(1, &result.vertex_array);
+    glGenBuffers(1, &result.vertex_buffer);
+    glBindVertexArray(result.vertex_array);
+    glBindBuffer(GL_ARRAY_BUFFER, result.vertex_buffer);
     glBufferData(GL_ARRAY_BUFFER, sizeof(planeVertices), &planeVertices, GL_STATIC_DRAW);
 
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 14 * sizeof(GLfloat), (void*)0);
-
     glEnableVertexAttribArray(1);
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 14 * sizeof(GLfloat), (void*)(3 * sizeof(GLfloat)));
-
     glEnableVertexAttribArray(2);
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 14 * sizeof(GLfloat), (void*)(6 * sizeof(GLfloat)));
-
     glEnableVertexAttribArray(3);
     glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 14 * sizeof(GLfloat), (void*)(8 * sizeof(GLfloat)));
-
     glEnableVertexAttribArray(4);
     glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, 14 * sizeof(GLfloat), (void*)(11 * sizeof(GLfloat)));
-    result.vertex_array = VAO;
-    result.vertex_buffer = VBO;
     std::cout<<"Plane created sucsessfully "<< result.vertex_array<<" "<<result.texture<<" "<<" "<<shader.Program<<" "<<result.shader.Program<<"\n";
     return result;
 }
