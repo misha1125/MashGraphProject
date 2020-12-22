@@ -55,6 +55,10 @@ public:
     void ChangeTexture(GLuint newTexture);
     void IgnoreCamPosition();
 
+    void ApplyTransformation(GLuint shader, glm::vec3 position);
+    void ApplyRotation(GLuint shader, glm::vec3 axis, GLfloat angle);
+    void ApplyScale(GLuint shader, glm::vec3 scale);
+
     static Model GeneratePlaneForParalax(MyShader &shader, Camera &camera, const char *path,GLfloat width, GLfloat height);
 };
 

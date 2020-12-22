@@ -20,6 +20,9 @@ GLuint vertex_buffer, vertex_array, index_buffer;
 Camera mainCamera;
 GLboolean enable_gama_correction = true;
 GLboolean enable_post_effect = false;
+GLboolean enable_focus = true;
+
+GLfloat  base_deph = 0.99f;
 void mouse_callback(GLFWwindow *window, double xpos, double ypos) {
     mainCamera.mouse_callback(window,xpos,ypos);
 }
@@ -33,6 +36,12 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
         enable_gama_correction = !enable_gama_correction;
     if(key == GLFW_KEY_Z && action == GLFW_PRESS)
         enable_post_effect = !enable_post_effect;
+    if(key == GLFW_KEY_F && action == GLFW_PRESS)
+        enable_focus = !enable_focus;
+    if(key == GLFW_KEY_UP && action == GLFW_PRESS)
+        base_deph+=0.002f;
+    if(key == GLFW_KEY_DOWN && action == GLFW_PRESS)
+        base_deph-=0.002f;
 }
 
 
@@ -203,11 +212,19 @@ int main()
     MyShader alphaShader("../vertex_shader.vs", "../fragment_shader.fs");
     Model alfaPlane(alphaShader, mainCamera, plane_vertices, sizeof(plane_vertices), 6, "../transparent.png", width, height, true);
 
+    MyShader dephShader("../vertex_shader.vs","../fragment_shader_deph.fs");
+
+
+
     glEnable(GL_DEPTH_TEST);
     glm::vec3 lightSource(0, 2,0);
     glm::vec3 lightColor(1,1,1);
     GLuint  frameBufer, screenImage;
     auto quadVAO = ConfiguratePostEffect(width,height,frameBufer, screenImage);
+
+    GLuint  dephBufer, dephImage;
+    quadVAO = ConfiguratePostEffect(width,height,dephBufer, dephImage);
+
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     while(!glfwWindowShouldClose(window))
@@ -312,17 +329,63 @@ int main()
         paralaxShader.Apply();
         paralaxShader.SetBool("enableGama",enable_gama_correction);
 
+        screenShader.Apply();
+
+
+        //Deph Render
+        glBindFramebuffer(GL_FRAMEBUFFER, dephBufer);
+        glEnable(GL_DEPTH_TEST);
+        glClearColor(1, 1, 1, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+        dephShader.Apply();
+        dephShader.SetFloat("dist",base_deph);
+        lightCube.ApplyTransformation(dephShader.Program, lightSource);
+        lightCube.Show();
+        sCube.ApplyTransformation(dephShader.Program,glm::vec3(0,0,-6));
+        sCube.Show();
+
+        nPlane.ApplyTransformation(dephShader.Program, glm::vec3(0,0,-2));
+        nPlane.Show();
+
+        cube.ApplyTransformation(dephShader.Program, glm::vec3(-1,-1,-6));
+        cube.ApplyRotation(dephShader.Program, glm::vec3(0,1,1),(GLfloat)glfwGetTime()*50.0f);
+        cube.Show();
+
+        cube.ApplyTransformation(dephShader.Program, glm::vec3(4,-2,-10));
+        cube.ApplyRotation(dephShader.Program, glm::vec3(0,1,1),(GLfloat)glfwGetTime()*50.0f);
+        cube.Show();
+
+        plane.ApplyTransformation(dephShader.Program, glm::vec3(1,-3,-6));
+        plane.ApplyScale(dephShader.Program, glm::vec3(10,1,10));
+        plane.Show();
+
+        paralaxPlane.ApplyTransformation(dephShader.Program, glm::vec3(2,0,-4));
+        paralaxPlane.Show();
+        alfaPlane.ApplyTransformation(dephShader.Program, first_pos);
+        alfaPlane.ApplyRotation(dephShader.Program, glm::vec3(1,0,0),90);
+        alfaPlane.Show();
+        alfaPlane.ApplyTransformation(dephShader.Program, second_pos);
+        alfaPlane.ApplyRotation(dephShader.Program, glm::vec3(1,0,0),90);
+        alfaPlane.Show();
+
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
         glDisable(GL_DEPTH_TEST);
         glClear(GL_COLOR_BUFFER_BIT);
 
         screenShader.Apply();
         screenShader.SetBool("enablePostEffect", enable_post_effect);
+        screenShader.SetInt("dephTexture", 1);
+        screenShader.SetInt("ourTexture", 0);
+        screenShader.SetBool("enableFocusing", enable_focus);
         glBindVertexArray(quadVAO);
+
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, screenImage);
+        glActiveTexture(GL_TEXTURE1);
+        glBindTexture(GL_TEXTURE_2D, dephImage);
         glDrawArrays(GL_TRIANGLES, 0, 6);
         glBindVertexArray(0);
+
         glfwSwapBuffers(window);
     }
     glfwTerminate();

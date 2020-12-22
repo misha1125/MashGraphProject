@@ -40,18 +40,22 @@ Model::Model(MyShader &shader, Camera &camera, GLfloat *vertex, size_t vertex_si
 
 
 void Model::ApplyTransformation(glm::vec3 position) {
+    this->ApplyTransformation(shader.Program, position);
+}
+
+void Model::ApplyTransformation(GLuint program, glm::vec3 position) {
     model = glm::mat4(1.0f);
     glm::mat4 view(1.0f);
     glm::mat4 projection(1.0f);
     view = glm::translate(view, position);
     projection = glm::perspective(glm::radians(45.0f), width / height, 0.1f, 100.0f);
-    GLint modelLoc = glGetUniformLocation(shader.Program, "model");
-    GLint viewLoc = glGetUniformLocation(shader.Program, "view");
-    GLint projLoc = glGetUniformLocation(shader.Program, "projection");
+    GLint modelLoc = glGetUniformLocation(program, "model");
+    GLint viewLoc = glGetUniformLocation(program, "view");
+    GLint projLoc = glGetUniformLocation(program, "projection");
     glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
     glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
     glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
-    GLint camLoc = glGetUniformLocation(shader.Program, "cameraView");
+    GLint camLoc = glGetUniformLocation(program, "cameraView");
     glUniformMatrix4fv(camLoc, 1, GL_FALSE, glm::value_ptr(camera.CameraView()));
     //std::cout<<shader.Program<<" "<<camera.cameraPos.x<<" "<<width << " "<<height <<"\n";
 }
@@ -66,14 +70,22 @@ void Model::Show() {
 }
 
 void Model::ApplyRotation(glm::vec3 axis, GLfloat angle) {
-    model = glm::rotate(model, glm::radians(angle), axis);
-    GLint modelLoc = glGetUniformLocation(shader.Program, "model");
-    glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+    this->ApplyRotation(shader.Program, axis, angle);
 }
 
 void Model::ApplyScale(glm::vec3 scale) {
+    this->ApplyScale(shader.Program, scale);
+}
+
+void Model::ApplyRotation(GLuint shader, glm::vec3 axis, GLfloat angle) {
+    model = glm::rotate(model, glm::radians(angle), axis);
+    GLint modelLoc = glGetUniformLocation(shader, "model");
+    glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+}
+
+void Model::ApplyScale(GLuint shader, glm::vec3 scale) {
     model = glm::scale(model,scale);
-    GLint modelLoc = glGetUniformLocation(shader.Program, "model");
+    GLint modelLoc = glGetUniformLocation(shader, "model");
     glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 }
 
